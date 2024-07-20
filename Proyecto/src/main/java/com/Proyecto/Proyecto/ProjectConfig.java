@@ -64,8 +64,12 @@ public class ProjectConfig implements WebMvcConfigurer {
 
     @Bean
      public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {http.authorizeHttpRequests((request) -> request.requestMatchers("/", "/index","/mensaje", "/errores/**", "/js/**","/facturar/**", "/css/**","/images/**", "/webjars/**","/registro/**","/nosotros","/contacto/contactos","/carrito/**").permitAll()
-                 .requestMatchers("/juego/filtrarPorNombre", "/nosotros","/contacto/**","/juego/juegos","/juego/juegosPorCategoria","/juego/query1","/carro/**","/query1","/filtrarPorNombre","/juegosPorCategoria","/facturar/**","/carrito/mensaje").hasRole("USER").requestMatchers(
-                         "/juego/**","/categoria/**","/usuario/**").hasRole("ADMIN")).formLogin((form) -> form.loginPage("/login").permitAll()).logout((logout) -> logout.permitAll());
+                 .requestMatchers("/juego/filtrarPorNombre", "/nosotros","/contacto/**",
+                         "/juego/juegos","/juego/juegosPorCategoria","/juego/query1",
+                         "/carro/**","/query1","/filtrarPorNombre","/juegosPorCategoria",
+                         "/facturar/**","/carrito/mensaje").hasRole("USER")
+             .requestMatchers(
+                         "/juego/**","/juego/**","/categoria/**","/usuario/**","/**").hasRole("ADMIN")).formLogin((form) -> form.loginPage("/login").permitAll()).logout((logout) -> logout.permitAll());
          return http.build();
      }
     
