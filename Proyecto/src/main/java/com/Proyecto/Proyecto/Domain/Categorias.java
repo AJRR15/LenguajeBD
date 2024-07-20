@@ -14,10 +14,13 @@ public class Categorias implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_categoria")
+    @Column(name = "ID_CATEGORIA")
     private Long idCategoria ;
+    @Column(name = "DESCRIPCION")
     private String descripcion;
+    @Column(name = "RUTA_IMAGEN")
     private String rutaImagen;
+    @Column(name = "ACTIVO")
     private boolean activo;
 
     @OneToMany
