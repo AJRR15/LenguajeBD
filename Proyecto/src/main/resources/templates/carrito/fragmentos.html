@@ -7,34 +7,35 @@
         <title>TuJuego.com</title>
     </head>
     <body>
-        <section th:fragment="listadoJuegos" id="juegos">
-            <div class="container">
-                <div class="card" style="background-color: rgba(0, 0, 0, 0.5);">
-                    <div class="container" style="background-color: rgba(0, 0, 0, 0); padding: 10px; text-align: center;">
-                        <h2 class="inline" style="color: white;" th:text="#{index.destacados}"></h2>
-                    </div>
-                    <div class="col">
-                        <div id="resultsBlock"></div>
-                    </div>
+       <section th:fragment="listadoJuegos" id="juegos">
+    <div class="container">
+        <div class="card" style="background-color: rgba(0, 0, 0, 0.5);">
+            <div class="container" style="background-color: rgba(0, 0, 0, 0); padding: 10px; text-align: center;">
+                <h2 class="inline" style="color: white;" th:text="#{index.destacados}"></h2>
+            </div>
+            <div class="col">
+                <div id="resultsBlock"></div>
+            </div>
+        </div>
+        <div class="row row-cols-3" th:if="${juegos != null and !juegos.empty}">
+            <div class="card" th:each="juego : ${juegos}" th:if="${juego.existencias > 0}" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="card-body" style="color: white;">
+                    <h5 class="card-title">[[${juego.nombre}]]</h5>
+                    <figure>
+                        <img th:src="@{${juego.imagen}}" height="200"/>
+                        <figcaption>[[${juego.precio} + ' (' + ${juego.existencias} + ')']]</figcaption>
+                    </figure>
+                    <form>
+                        <input type="hidden" name="id" th:value="${juego.id_juego}"/>
+                        <input type="hidden" name="existencia" th:value="${juego.existencias}"/>
+                        <button style="background-color: rgba(0, 255, 0, 0.5); color: white;" class="btn btn-transparent" id="addCar" name="addCar" onclick="addCard(this.form)" type="button"><i class="fas fa-cart-plus"></i></button>
+                    </form>
+                    <p class="card-text">[[${juego.empresa}]]</p>
                 </div>
-                <div class="row row-cols-3" th:if="${juegos != null and !juegos.empty}">
-                    <div class="card" th:each="juego : ${juegos}" style="background-color: rgba(0, 0, 0, 0.5);">
-                        <div class="card-body" style="color: white;">
-                            <h5 class="card-title">[[${juego.nombre}]]</h5>
-                            <figure style="">
-                                <img th:src="@{${juego.imagen}}" height="200"/>
-                                <figcaption>[[${juego.precio} + ' (' + ${juego.existencias} + ')']]</figcaption>
-                            </figure>
-                            <form>
-                                <input type="hidden" name="id" th:value="${juego.id_juego}"/>
-                                <input type="hidden" name="existencia" th:value="${juego.existencias}"/>
-                                <button style="background-color: rgba(0, 255, 0, 0.5); color: white; "class="btn btn-trasparent" id="addCar" name="addCar" onclick="addCard(this.form)" type="button"><i class="fas fa-cart-plus"></i></button>
-                            </form>
-                            <p class="card-text">[[${juego.empresa}]]</p> 
-                        </div>
-                    </div>
-                </div>
-        </section>
+            </div>
+        </div>
+    </div>
+</section>
         <div th:fragment="verCarrito" th:unless="${#lists.isEmpty(listaItems)}"> 
             <form action="/carrito/listado">
                 <button type="submit" style="background-color: rgba(0, 255, 255, 0.8);" class="btn btn-trasparent">
