@@ -136,6 +136,27 @@ public class ItemServiceImpl implements ItemService {
         facturaDao.save(factura);
         listaItems.clear();
     }
+    
+    @Override
+    public void resta(Item item) {
+        boolean existe = false;
+        for (Item i : listaItems) {
+            //Busca si ya existe el producto en el carrito
+            if (Objects.equals(i.getId_juego(), item.getId_juego())) {
+                //Valida si aún puede colocar un item adicional -segun existencias-
+                if (i.getCantidad() >1) {
+                    //Incrementa en 1 la cantidad de elementos
+                    i.setCantidad(i.getCantidad() - 1);
+                }
+                existe = true;
+                break;
+            }
+        }
+        if (!existe) {//Si no está el producto en el carrito se agrega cantidad =1.            
+            item.setCantidad(1);
+            listaItems.add(item);
+        }
+    }
 
 
 }
