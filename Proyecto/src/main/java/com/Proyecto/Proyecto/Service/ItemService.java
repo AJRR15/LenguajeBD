@@ -27,7 +27,7 @@ public interface ItemService {
     public void save(Item item);
 
     public void actualiza(Item item);
-     public void resta (Item item);
+
     public void facturar();
 
 }

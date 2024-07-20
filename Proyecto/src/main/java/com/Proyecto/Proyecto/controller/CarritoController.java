@@ -162,52 +162,5 @@ public class CarritoController {
         itemService.facturar();
         return "redirect:/carrito/mensaje";
     }
-    
-      @GetMapping("/carrito/sumar/{id_juego}")
-    public String sumar(Model model, Item item) {
-        Item item2 = itemService.get(item);
-        System.out.println(item);
-        if (item2 == null) {
-            Juegos juegos = juegosService.getJuego(item);
-            item2 = new Item(juegos);
-
-        }
-        itemService.save(item2);
-        System.out.println(item2);
-        var lista = itemService.gets();
-        var totalCarritos = 0;
-        var carritoTotalVenta = 0;
-        for (Item i : lista) {
-            totalCarritos += i.getCantidad();
-            carritoTotalVenta += (i.getCantidad() * i.getPrecio());
-        }
-        model.addAttribute("listaItems", lista);
-        model.addAttribute("listaTotal", totalCarritos);
-        model.addAttribute("carritoTotal", carritoTotalVenta);
-        return "redirect:/carrito/listado";
-    }
-    @GetMapping("/carrito/restar/{id_juego}")
-    public String restar(Model model, Item item) {
-        Item item2 = itemService.get(item);
-        System.out.println(item);
-        if (item2 == null) {
-            Juegos juegos = juegosService.getJuego(item);
-            item2 = new Item(juegos);
-
-        }
-        itemService.resta(item2);
-        System.out.println(item2);
-        var lista = itemService.gets();
-        var totalCarritos = 0;
-        var carritoTotalVenta = 0;
-        for (Item i : lista) {
-            totalCarritos += i.getCantidad();
-            carritoTotalVenta += (i.getCantidad() * i.getPrecio());
-        }
-        model.addAttribute("listaItems", lista);
-        model.addAttribute("listaTotal", totalCarritos);
-        model.addAttribute("carritoTotal", carritoTotalVenta);
-        return "redirect:/carrito/listado";
-    }
 
 }
