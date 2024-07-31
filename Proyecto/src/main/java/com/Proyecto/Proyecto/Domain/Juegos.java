@@ -6,24 +6,31 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "juego")
+@Table(name = "JUEGO")
 public class Juegos implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_juego")
+    @Column(name = "ID_JUEGO")
     private Long id_juego;
+    @Column(name = "IMAGEN")
     private String imagen;
+    @Column(name = "NOMBRE")
     private String nombre;
+    @Column(name = "EMPRESA")
     private String empresa;
+    @Column(name = "PRECIO")
     private double precio;
+    @Column(name = "EXISTENCIAS")
     private int existencias;
-    private boolean activo;
+    @Column(name = "ESTADO")
+    private boolean estado;
+
     
     @ManyToOne
-    @JoinColumn(name="id_categoria")
+    @JoinColumn(name="ID_CATEGORIA")
     private Categorias categoria;
 
     public Juegos() {

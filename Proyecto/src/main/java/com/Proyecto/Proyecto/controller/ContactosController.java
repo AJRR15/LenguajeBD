@@ -2,9 +2,9 @@
 package com.Proyecto.Proyecto.controller;
 
 import com.Proyecto.Proyecto.Domain.Contactos;
-import com.Proyecto.Proyecto.Domain.Informacion;
+
 import com.Proyecto.Proyecto.Service.ContactosService;
-import com.Proyecto.Proyecto.Service.InformacionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +19,12 @@ public class ContactosController {
 
     @Autowired
     private ContactosService contactosService;
-    @Autowired
-    private InformacionService infoService;
+
 
     @GetMapping("/contactos")
     public String mostrarPaginaContacto(Model model) {
         var contactos = contactosService.getContactos(null);
-        var informaciones = infoService.getInformaciones(null);
         model.addAttribute("contactos", contactos);
-        model.addAttribute("informaciones", informaciones);
         return "contacto/listado";
     }
 
@@ -43,16 +40,6 @@ public class ContactosController {
         return "redirect:/contacto/contactos";
     }
 
-    @PostMapping("/guardarInformacion")
-    public String guardarInformacion(Informacion informacion) {
-        infoService.save(informacion);
-        return "redirect:/contacto/contactos";
-    }
 
-    @GetMapping("/eliminarInformacion/{id_informacion}")
-    public String informacionEliminar(Informacion Informacion) {
-        infoService.delete(Informacion);
-        return "redirect:/contacto/contactos";
-    }
 
 }

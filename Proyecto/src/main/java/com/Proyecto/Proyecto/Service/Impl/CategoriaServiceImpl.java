@@ -19,7 +19,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     public List<Categorias> getCategorias(boolean activos) {
         var lista = categoriaDao.findAll();
         if (activos) {
-            lista.removeIf(e -> !e.isActivo());
+            lista.removeIf(e -> !e.isEstado());
         }
         return lista;
     }

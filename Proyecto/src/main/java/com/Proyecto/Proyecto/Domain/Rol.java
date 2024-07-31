@@ -12,17 +12,18 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Data
-@Table(name = "rol")
+@Table(name = "ROL")
 public class Rol implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_ROL")
     private Long idRol;
     
-    @NotEmpty
+    @Column(name = "NOMBRE")
     private String nombre;
     
-    @Column(name = "id_usuario")
+    @Column(name = "ID_USUARIO")
     private Long idUsuario;
 }

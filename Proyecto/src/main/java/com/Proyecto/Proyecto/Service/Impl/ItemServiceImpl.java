@@ -13,15 +13,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.Proyecto.Proyecto.Dao.FacturaDao;
 import com.Proyecto.Proyecto.Dao.Juegosdao;
-import com.Proyecto.Proyecto.Dao.VentaDao;
 import com.Proyecto.Proyecto.Domain.Factura;
 import com.Proyecto.Proyecto.Domain.Item;
 import com.Proyecto.Proyecto.Domain.Juegos;
 import com.Proyecto.Proyecto.Domain.Usuario;
-import com.Proyecto.Proyecto.Domain.Venta;
+import com.Proyecto.Proyecto.Domain.Detalle_Factura;
 import com.Proyecto.Proyecto.Service.ItemService;
 import static com.Proyecto.Proyecto.Service.ItemService.listaItems;
 import com.Proyecto.Proyecto.Service.UsuarioService;
+import com.Proyecto.Proyecto.Dao.Detalle_FacturaDao;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -94,11 +94,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Autowired
-    private UsuarioService uuarioService;
+    private UsuarioService usuarioService;
     @Autowired
     private FacturaDao facturaDao;
     @Autowired
-    private VentaDao ventaDao;
+    private Detalle_FacturaDao Detalle_FacturaDao;
     @Autowired
     private Juegosdao juegosDao;
 
@@ -116,17 +116,17 @@ public class ItemServiceImpl implements ItemService {
         if (username.isBlank()) {
             return;
         }
-        Usuario uuario = uuarioService.getUsuarioPorUsername(username);
-        if (uuario == null) {
+        Usuario usuario = usuarioService.getUsuarioPorUsername(username);
+        if (usuario == null) {
             return;
         }
-        Factura factura = new Factura(uuario.getIdUsuario());
+        Factura factura = new Factura(usuario.getIdUsuario());
         factura = facturaDao.save(factura);
         double total = 0;
         for (Item i : listaItems) {
             System.out.println("Juego: " + i.getNombre()+ " Cantidad: " + i.getCantidad() + " Total: " + i.getPrecio() * i.getCantidad());
-            Venta venta = new Venta(factura.getIdFactura(),i.getId_juego(), i.getPrecio(), i.getCantidad());
-            ventaDao.save(venta);
+            Detalle_Factura detalle_factura = new Detalle_Factura(factura.getIdFactura(),i.getId_juego(), i.getPrecio(), i.getCantidad());
+            Detalle_FacturaDao.save(detalle_factura);
             Juegos juegos = juegosDao.getReferenceById(i.getId_juego());
             juegos.setExistencias(juegos.getExistencias()- i.getCantidad());
             juegosDao.save(juegos);

@@ -10,28 +10,25 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "contacto")
+@Table(name = "CONTACTO")
 public class Contactos implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_contacto")
+    @Column(name = "ID_CONTACTO")
     private Long idContacto;
+    @Column(name = "NOMBRE")
     private String nombre;
+    @Column(name = "APELLIDO")
     private String apellido;
+    @Column(name = "NUMERO")
     private int numero;
+    @Column(name = "MENSAJE")
     private String mensaje;
 
     public Contactos() {
-    }
-
-    public Contactos(Long idContacto, String nombre, int numero, String mensaje) {
-        this.idContacto = idContacto;
-        this.nombre = nombre;
-        this.numero = numero;
-        this.mensaje = mensaje;
     }
 
 }

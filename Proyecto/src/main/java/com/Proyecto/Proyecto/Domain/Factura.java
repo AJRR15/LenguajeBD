@@ -12,19 +12,21 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "factura")
+@Table(name = "FACTURA")
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_factura")
+    @Column(name = "ID_FACTURA")
     private Long idFactura;
+    @Column(name = "ID_USUARIO")
     private Long idUsuario;
+    @Column(name = "FECHA")
     private Date fecha;
+    @Column(name = "TOTAL")
     private double total;
-    private int estado;
 
     public Factura() {
     }
@@ -32,7 +34,9 @@ public class Factura implements Serializable {
     public Factura(Long idUSuario) {
         this.idUsuario = idUSuario;
         this.fecha = Calendar.getInstance().getTime();
-        this.estado = 1;
+  
     }
+
+    
 
 }

@@ -28,7 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> getUsuarios() {
-        return usuarioDao.findAll();
+        return usuarioDao.getUsuarios();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     @Transactional
     public void save(Usuario usuario, int i) {
-        usuario.setActivo(1);
+        usuario.setEstado(1);
         usuario=usuarioDao.save(usuario);
         
     }
@@ -77,7 +77,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public void save2(Usuario usuario, int i) {
-        usuario.setActivo(1);
+        usuario.setEstado(1);
         usuario=usuarioDao.save(usuario);
         Long idUsuario = usuario.getIdUsuario(); 
         if (i == 1 && idUsuario != null) { 
