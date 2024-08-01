@@ -16,30 +16,32 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Categorias> getCategorias(boolean activos) {
-        var lista = categoriaDao.findAll();
-        if (activos) {
-            lista.removeIf(e -> !e.isEstado());
-        }
+    public List<Categorias> getCategorias() {
+        var lista = categoriaDao.getListCategorias();
         return lista;
     }
-
+    
     @Override
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     public Categorias getCategoria(Categorias categoria) {
-        return categoriaDao.findById(categoria.getIdCategoria()).orElse(null);
+        return categoriaDao.getOneCategoria(categoria.getIdCategoria());
     }
 
     @Override
     @Transactional
     public void save(Categorias categoria) {
-        categoriaDao.save(categoria);
+        categoriaDao.saveCategoria(categoria);
     }
 
     @Override
     @Transactional
     public void delete(Categorias categoria) {
-        categoriaDao.delete(categoria);
+        categoriaDao.deleteCategoria(categoria.getIdCategoria());
     }
-    
+
+    @Override
+    public void update(Categorias categoria) {
+        categoriaDao.updateCategoria(categoria);
+    }
+  
 }

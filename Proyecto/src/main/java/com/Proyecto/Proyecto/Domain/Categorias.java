@@ -30,6 +30,14 @@ public class Categorias implements Serializable {
     public Categorias() {
     }
 
+    public Categorias(Long idCategoria, String descripcion, String rutaImagen, boolean estado, List<Juegos> juegos) {
+        this.idCategoria = idCategoria;
+        this.descripcion = descripcion;
+        this.rutaImagen = rutaImagen;
+        this.estado = estado;
+        this.juegos = juegos;
+    }
+
    
 
 

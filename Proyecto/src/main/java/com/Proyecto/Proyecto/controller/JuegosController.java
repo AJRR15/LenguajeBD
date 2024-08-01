@@ -40,7 +40,7 @@ public class JuegosController {
         model.addAttribute("juegos", juegos);
 
         // Obtener todas las categorías y agregarlas al modelo
-        List<Categorias> categorias = categoriaService.getCategorias(true);
+        List<Categorias> categorias = categoriaService.getCategorias();
         model.addAttribute("categorias", categorias);
 
         return "juego/juegos";
@@ -56,7 +56,7 @@ public class JuegosController {
         model.addAttribute("precioInf", precioInf);
         model.addAttribute("precioSup", precioSup);
 
-        List<Categorias> categorias = categoriaService.getCategorias(true);
+        List<Categorias> categorias = categoriaService.getCategorias();
         model.addAttribute("categorias", categorias);
 
         return "juego/juegos";
@@ -73,7 +73,7 @@ public class JuegosController {
         model.addAttribute("juegos", juegos);
 
         // Obtener todas las categorías y agregarlas al modelo
-        List<Categorias> categorias = categoriaService.getCategorias(true);
+        List<Categorias> categorias = categoriaService.getCategorias();
         model.addAttribute("categorias", categorias);
 
         return "juego/juegos"; // Ruta correcta para la vista de juegos
@@ -110,7 +110,7 @@ public class JuegosController {
         model.addAttribute("juego", juego);
 
         // Obtener todas las categorías y agregarlas al modelo
-        List<Categorias> categorias = categoriaService.getCategorias(true);
+        List<Categorias> categorias = categoriaService.getCategorias();
         model.addAttribute("categorias", categorias);
 
         return "/juego/modifica";

@@ -1,10 +1,114 @@
 package com.Proyecto.Proyecto.Dao;
 
 import com.Proyecto.Proyecto.Domain.Categorias;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.List;
+import java.util.Map;
+import oracle.jdbc.OracleTypes;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.SqlOutParameter;
 
 @Repository
-public interface CategoriaDao extends JpaRepository<Categorias, Long> {
+public class CategoriaDao {
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    public List<Categorias> getListCategorias() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("GET_CATEGORIA")
+                .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
+                .returningResultSet("DATOS", new RowMapper<Categorias>() {
+                    @Override
+                    public Categorias mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Categorias categoria = new Categorias();
+                        categoria.setIdCategoria(rs.getLong("ID_CATEGORIA"));
+                        categoria.setDescripcion(rs.getString("DESCRIPCION"));
+                        categoria.setRutaImagen(rs.getString("RUTA_IMAGEN"));
+                        categoria.setEstado(rs.getBoolean("ESTADO"));
+                        return categoria;
+                    }
+                });
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        Map<String, Object> results = simpleJdbcCall.execute(mapSqlParameterSource);
+        List<Categorias> categoriaList = (List<Categorias>) results.get("DATOS");
+        return categoriaList;
+    }
+
+    public Categorias getOneCategoria(Long id) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("GET_ONE_CATEGORIA")
+                .declareParameters(new SqlParameter("CID", Types.BIGINT),new SqlParameter("DATOS", Types.REF_CURSOR))
+                .returningResultSet("DATOS", new RowMapper<Categorias>() {
+                    @Override
+                    public Categorias mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Categorias categoria = new Categorias();
+                        categoria.setIdCategoria(rs.getLong("ID_CATEGORIA"));
+                        categoria.setDescripcion(rs.getString("DESCRIPCION"));
+                        categoria.setRutaImagen(rs.getString("RUTA_IMAGEN"));
+                        categoria.setEstado(rs.getBoolean("ESTADO"));
+                        return categoria;
+                    }
+                });
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("CID", id);
+        Map<String, Object> results = simpleJdbcCall.execute(mapSqlParameterSource);
+        List<Categorias> categoriaList = (List<Categorias>) results.get("DATOS");
+        return categoriaList.isEmpty() ? null : categoriaList.get(0);
+    }
+
+    public void saveCategoria(Categorias categoria) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("ADD_CATEGORIA")
+                .declareParameters(
+                        new SqlParameter("DESCRIP", Types.VARCHAR),
+                        new SqlParameter("IMG", Types.VARCHAR),
+                        new SqlParameter("ACT", Types.BOOLEAN)
+                );
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("DESCRIP", categoria.getDescripcion());
+        mapSqlParameterSource.addValue("IMG", categoria.getRutaImagen());
+        mapSqlParameterSource.addValue("ACT", categoria.isEstado());
+        simpleJdbcCall.execute(mapSqlParameterSource);
+    }
     
+    public void deleteCategoria(Long id) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("DELETE_CATEGORIA")
+                .declareParameters(new SqlParameter("CID", Types.BIGINT));
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("CID", id);
+        simpleJdbcCall.execute(mapSqlParameterSource);
+    }
+    
+    public void updateCategoria(Categorias categoria) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("UPDATE_CATEGORIA")
+                .declareParameters(
+                        new SqlParameter("CID", Types.BIGINT),
+                        new SqlParameter("DESCRIP", Types.VARCHAR),
+                        new SqlParameter("IMG", Types.VARCHAR),
+                        new SqlParameter("ACT", Types.BOOLEAN)
+                );
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("CID",categoria.getIdCategoria());
+        mapSqlParameterSource.addValue("DESCRIP", categoria.getDescripcion());
+        mapSqlParameterSource.addValue("IMG", categoria.getRutaImagen());
+        mapSqlParameterSource.addValue("ACT", categoria.isEstado());
+        simpleJdbcCall.execute(mapSqlParameterSource);
+    }
+
 }

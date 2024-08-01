@@ -31,4 +31,13 @@ public class Contactos implements Serializable {
     public Contactos() {
     }
 
+    public Contactos(Long idContacto, String nombre, String apellido, int numero, String mensaje) {
+        this.idContacto = idContacto;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.numero = numero;
+        this.mensaje = mensaje;
+    }
+    
+    
 }
