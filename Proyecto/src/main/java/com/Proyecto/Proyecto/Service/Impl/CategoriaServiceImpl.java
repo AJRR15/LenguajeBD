@@ -40,8 +40,8 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    public void update(Categorias categoria) {
-        categoriaDao.updateCategoria(categoria);
+    public void update(Long CID, String DESCRIP,String IMG,boolean ACT) {
+        categoriaDao.updateCategoria(CID,DESCRIP,IMG,ACT);
     }
   
 }

@@ -9,5 +9,5 @@ public interface CategoriaService {
     public Categorias getCategoria(Categorias categoria);
     public void save(Categorias categoria);
     public void delete(Categorias categoria);
-    public void update(Categorias categoria);
+    public void update(Long CID, String DESCRIP,String IMG,boolean ACT);
 }

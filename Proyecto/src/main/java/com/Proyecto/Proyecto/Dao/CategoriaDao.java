@@ -92,7 +92,7 @@ public class CategoriaDao {
         simpleJdbcCall.execute(mapSqlParameterSource);
     }
     
-    public void updateCategoria(Categorias categoria) {
+    public void updateCategoria(Long CID, String DESCRIP,String IMG,boolean ACT) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("UPDATE_CATEGORIA")
@@ -103,10 +103,10 @@ public class CategoriaDao {
                         new SqlParameter("ACT", Types.BOOLEAN)
                 );
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("CID",categoria.getIdCategoria());
-        mapSqlParameterSource.addValue("DESCRIP", categoria.getDescripcion());
-        mapSqlParameterSource.addValue("IMG", categoria.getRutaImagen());
-        mapSqlParameterSource.addValue("ACT", categoria.isEstado());
+        mapSqlParameterSource.addValue("CID",CID);
+        mapSqlParameterSource.addValue("DESCRIP", DESCRIP);
+        mapSqlParameterSource.addValue("IMG", IMG);
+        mapSqlParameterSource.addValue("ACT", ACT);
         simpleJdbcCall.execute(mapSqlParameterSource);
     }
 
