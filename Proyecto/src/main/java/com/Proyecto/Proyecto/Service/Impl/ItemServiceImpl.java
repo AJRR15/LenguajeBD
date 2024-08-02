@@ -12,15 +12,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.Proyecto.Proyecto.Dao.FacturaDao;
+<<<<<<< Updated upstream
 import com.Proyecto.Proyecto.Dao.Juegosdao;
 import com.Proyecto.Proyecto.Dao.VentaDao;
+=======
+import com.Proyecto.Proyecto.Dao.JuegosDao;
+>>>>>>> Stashed changes
 import com.Proyecto.Proyecto.Domain.Factura;
 import com.Proyecto.Proyecto.Domain.Item;
 import com.Proyecto.Proyecto.Domain.Juegos;
 import com.Proyecto.Proyecto.Domain.Usuario;
 import com.Proyecto.Proyecto.Domain.Venta;
 import com.Proyecto.Proyecto.Service.ItemService;
-import static com.Proyecto.Proyecto.Service.ItemService.listaItems;
+//import static com.Proyecto.Proyecto.Service.ItemService.listaItems;
 import com.Proyecto.Proyecto.Service.UsuarioService;
 
 @Service
@@ -100,7 +104,7 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private VentaDao ventaDao;
     @Autowired
-    private Juegosdao juegosDao;
+    private JuegosDao juegosDao;
 
     @Override
     public void facturar() {
@@ -125,11 +129,17 @@ public class ItemServiceImpl implements ItemService {
         double total = 0;
         for (Item i : listaItems) {
             System.out.println("Juego: " + i.getNombre()+ " Cantidad: " + i.getCantidad() + " Total: " + i.getPrecio() * i.getCantidad());
+<<<<<<< Updated upstream
             Venta venta = new Venta(factura.getIdFactura(),i.getId_juego(), i.getPrecio(), i.getCantidad());
             ventaDao.save(venta);
             Juegos juegos = juegosDao.getReferenceById(i.getId_juego());
+=======
+            Detalle_Factura detalle_factura = new Detalle_Factura(factura.getIdFactura(),i.getId_juego(), i.getPrecio(), i.getCantidad());
+            Detalle_FacturaDao.save(detalle_factura);
+            Juegos juegos = juegosDao.getOneJuegosId(i.getId_juego());
+>>>>>>> Stashed changes
             juegos.setExistencias(juegos.getExistencias()- i.getCantidad());
-            juegosDao.save(juegos);
+            juegosDao.saveJuegos(juegos);
             total += i.getPrecio() * i.getCantidad();
         }
         factura.setTotal(total);

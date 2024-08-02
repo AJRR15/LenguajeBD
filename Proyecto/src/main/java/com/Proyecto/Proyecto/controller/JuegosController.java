@@ -82,7 +82,7 @@ public class JuegosController {
     @PostMapping("/filtrarPorNombre")
     public String filtrarPorNombre(@RequestParam(value = "nombre", required = false) String nombre,
             Model model) {
-        List<Juegos> juegos = juegosService.findByNombreContaining(nombre);
+        List<Juegos> juegos = juegosService.getJuegos(nombre);
         model.addAttribute("juegos", juegos);
         return "juego/juegos"; // Asegúrate de que la vista correspondiente sea la correcta
     }
