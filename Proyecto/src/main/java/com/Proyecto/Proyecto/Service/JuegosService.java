@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface JuegosService {
     List<Juegos> getJuegos(String nombre);
-
+   
     Juegos getJuego(Juegos juegos);
 
     void save(Juegos juegos);

@@ -20,12 +20,20 @@ public class Juegos implements Serializable {
     private String empresa;
     private double precio;
     private int existencias;
+<<<<<<< Updated upstream
     private boolean activo;
     
     @ManyToOne
     @JoinColumn(name="id_categoria")
     private Categorias categoria;
 
+=======
+    @Column(name = "ESTADO")
+    private boolean estado;
+    @Column(name="ID_CATEGORIA")
+    private Long categoria;
+    
+>>>>>>> Stashed changes
     public Juegos() {
     }
 

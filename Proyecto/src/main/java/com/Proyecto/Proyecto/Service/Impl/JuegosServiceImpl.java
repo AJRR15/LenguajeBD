@@ -1,6 +1,6 @@
 package com.Proyecto.Proyecto.Service.Impl;
 
-import com.Proyecto.Proyecto.Dao.Juegosdao;
+import com.Proyecto.Proyecto.Dao.JuegosDao;
 import com.Proyecto.Proyecto.Service.JuegosService;
 import com.Proyecto.Proyecto.Domain.Juegos;
 import java.util.List;
@@ -12,65 +12,70 @@ import org.springframework.transaction.annotation.Transactional;
 public class JuegosServiceImpl implements JuegosService {
 
     @Autowired
-    private Juegosdao juegosDao;
+    private JuegosDao juegosDao;
 
     @Override
     @Transactional(readOnly = true)
-    public List<Juegos> getJuegos(String nombre) {
-        if (nombre != null && !nombre.isEmpty()) {
-            return juegosDao.findByNombre(nombre);
+    public List<Juegos> getJuegos(String juegos) {
+        if (juegos != null && !juegos.isEmpty()) {
+            return juegosDao.getOneJuegos(juegos);
         } else {
-            return juegosDao.findAll();
+            return juegosDao.getListJuegos();
         }
     }
+    
+ 
 
     @Override
     @Transactional(readOnly = true)
     public Juegos getJuego(Juegos juegos) {
-    return juegosDao.findById(juegos.getId_juego()).orElse(null);
+    return juegosDao.getOneJuegosId(juegos.getId_juego());
 }
 
 
     @Override
     @Transactional
     public void save(Juegos juegos) {
-        juegosDao.save(juegos);
+        juegosDao.saveJuegos(juegos);
     }
 
     @Override
     @Transactional
     public void delete(Juegos juegos) {
-        juegosDao.delete(juegos);
+        juegosDao.deleteJuegos(juegos.getId_juego());
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Juegos> findByPrecioBetweenOrderByPrecio(double precioInf, double precioSup) {
-        return juegosDao.findByPrecioBetweenOrderByPrecio(precioInf, precioSup);
+        return juegosDao.getJuegosPorPrecio(precioInf, precioSup);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Juegos> getJuegosPorCategoria(Long categoriaId) {
-        return juegosDao.findByCategoria_IdCategoria(categoriaId);
+        return juegosDao.getOneJuegosIdCategoria(categoriaId);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Juegos> getJuegosConFiltros(Double precioInf, Double precioSup, Long categoriaId) {
         if (precioInf != null && precioSup != null && categoriaId != null) {
-            return juegosDao.findByPrecioBetweenAndCategoriaIdOrderByPrecio(precioInf, precioSup, categoriaId);
+            return juegosDao.getJuegosConFiltros(precioInf, precioSup, categoriaId);
         } else if (precioInf != null && precioSup != null) {
-            return juegosDao.findByPrecioBetweenOrderByPrecio(precioInf, precioSup);
+            return juegosDao.getJuegosPorPrecio(precioInf, precioSup);
         } else if (categoriaId != null) {
-            return juegosDao.findByCategoria_IdCategoria(categoriaId);
+            return juegosDao.getOneJuegosIdCategoria(categoriaId);
         } else {
-            return juegosDao.findAll(); // Retornar todos los juegos si no se aplican filtros
+            return juegosDao.getListJuegos(); // Retornar todos los juegos si no se aplican filtros
         }
     }
         @Override
     @Transactional(readOnly = true)
     public List<Juegos> findByNombreContaining(String nombre) {
-        return juegosDao.findByNombreContaining(nombre);
+        return juegosDao.getOneJuegos(nombre);
     }
+
+   
+  
 }
