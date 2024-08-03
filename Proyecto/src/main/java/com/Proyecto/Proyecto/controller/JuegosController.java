@@ -5,6 +5,7 @@ import com.Proyecto.Proyecto.Service.JuegosService;
 import com.Proyecto.Proyecto.Service.CategoriaService; // Importar el servicio de categorías
 import com.Proyecto.Proyecto.Domain.Categorias; // Importar la clase de categorías
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,13 +33,12 @@ public class JuegosController {
         model.addAttribute("juegos", juegos);
         List<Categorias> categorias2 = juegosService.cateMask();
         Map<Long, String> categoriasMap = categorias2.stream()
-        .collect(Collectors.toMap(Categorias::getIdCategoria, Categorias::getDescripcion));
+                .collect(Collectors.toMap(Categorias::getIdCategoria, Categorias::getDescripcion));
         List<Categorias> categorias = juegosService.getCates();
         model.addAttribute("categorias", categorias);
         model.addAttribute("categoriasMap", categoriasMap);
         return "juego/juegos";
     }
-
 
     @GetMapping("/nuevo")
     public String hotelNuevo(Juegos juego) {
@@ -68,17 +68,17 @@ public class JuegosController {
 
         return "/juego/modifica";
     }
-    
+
     @PostMapping("/modificar2")
     public String categoriaModificar2(@RequestParam("id_juego") Long idJuego,
-        @RequestParam("imagen") String imagen,
-        @RequestParam("nombre") String nombre,
-        @RequestParam("empresa") String empresa,
-        @RequestParam("precio") double precio,
-        @RequestParam("existencias") int existencias,
-        @RequestParam("estado") boolean estado,
-        @RequestParam("idcategoria") Long idcategoria) {
-        juegosService.update(idJuego,imagen,nombre,empresa,precio,existencias,estado,idcategoria);
+            @RequestParam("imagen") String imagen,
+            @RequestParam("nombre") String nombre,
+            @RequestParam("empresa") String empresa,
+            @RequestParam("precio") double precio,
+            @RequestParam("existencias") int existencias,
+            @RequestParam("estado") boolean estado,
+            @RequestParam("idcategoria") Long idcategoria) {
+        juegosService.update(idJuego, imagen, nombre, empresa, precio, existencias, estado, idcategoria);
         return "redirect:/juego/juegos";
     }
 }

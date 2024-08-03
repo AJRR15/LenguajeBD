@@ -121,19 +121,18 @@ public class ItemServiceImpl implements ItemService {
             return;
         }
         Factura factura = new Factura(usuario.getIdUsuario());
-        factura = facturaDao.save(factura);
+        facturaDao.savefactura(factura);
         double total = 0;
         for (Item i : listaItems) {
             System.out.println("Juego: " + i.getNombre()+ " Cantidad: " + i.getCantidad() + " Total: " + i.getPrecio() * i.getCantidad());
             Detalle_Factura detalle_factura = new Detalle_Factura(factura.getIdFactura(),i.getId_juego(), i.getPrecio(), i.getCantidad());
-            Detalle_FacturaDao.save(detalle_factura);
+            Detalle_FacturaDao.savedetalle(detalle_factura);
             Juegos juegos = juegosDao.getIdJuegos(i.getId_juego());
             juegos.setExistencias(juegos.getExistencias()- i.getCantidad());
             juegosDao.saveJuegos(juegos);
             total += i.getPrecio() * i.getCantidad();
         }
-        factura.setTotal(total);
-        facturaDao.save(factura);
+        facturaDao.updatefactura(factura.getIdFactura(),total);
         listaItems.clear();
     }
 
