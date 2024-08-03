@@ -22,6 +22,7 @@ import com.Proyecto.Proyecto.Service.ItemService;
 import static com.Proyecto.Proyecto.Service.ItemService.listaItems;
 import com.Proyecto.Proyecto.Service.UsuarioService;
 import com.Proyecto.Proyecto.Dao.Detalle_FacturaDao;
+import java.util.Calendar;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -122,6 +123,7 @@ public class ItemServiceImpl implements ItemService {
         }
         Factura factura = new Factura(usuario.getIdUsuario());
         facturaDao.savefactura(factura);
+        factura=facturaDao.getfactura(Calendar.getInstance().getTime());
         double total = 0;
         for (Item i : listaItems) {
             System.out.println("Juego: " + i.getNombre()+ " Cantidad: " + i.getCantidad() + " Total: " + i.getPrecio() * i.getCantidad());
