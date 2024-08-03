@@ -143,8 +143,8 @@ public class JuegosDao {
                     @Override
                     public Categorias mapRow(ResultSet rs, int rowNum) throws SQLException {
                         Categorias categoria = new Categorias();
-                        categoria.setIdCategoria(rs.getLong("ID_CATEGORIA")); // Asegúrate de que coincida el nombre de columna
-                        categoria.setDescripcion(rs.getString("DESCRIPCION")); // Asegúrate de que coincida el nombre de columna
+                        categoria.setIdCategoria(rs.getLong("ID_CATEGORIA")); 
+                        categoria.setDescripcion(rs.getString("DESCRIPCION")); 
                         return categoria;
                     }
                 });
@@ -179,6 +179,26 @@ public class JuegosDao {
         Map<String, Object> results = simpleJdbcCall.execute(mapSqlParameterSource);
         List<Juegos> juegoList = (List<Juegos>) results.get("DATOS");
         return juegoList;
+    }
+    
+    public List<Categorias> getdesc() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("GET_CATEGORIA_DESC")
+                .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
+                .returningResultSet("DATOS", new RowMapper<Categorias>() {
+                    @Override
+                    public Categorias mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Categorias categoria = new Categorias();
+                        categoria.setIdCategoria(rs.getLong("ID_CATEGORIA")); 
+                        categoria.setDescripcion(rs.getString("DESCRIPCION")); 
+                        return categoria;
+                    }
+                });
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        Map<String, Object> results = simpleJdbcCall.execute(mapSqlParameterSource);
+        List<Categorias> categoriasList = (List<Categorias>) results.get("DATOS");
+        return categoriasList;
     }
 
 }

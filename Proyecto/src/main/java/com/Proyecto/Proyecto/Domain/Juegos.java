@@ -30,7 +30,6 @@ public class Juegos implements Serializable {
     @Column(name="ID_CATEGORIA")
     private Long idcategoria;
     
-    
 
     public Juegos() {
     }

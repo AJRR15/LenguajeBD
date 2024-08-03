@@ -6,6 +6,8 @@ import com.Proyecto.Proyecto.Service.CategoriaService; // Importar el servicio d
 import com.Proyecto.Proyecto.Domain.Categorias; // Importar la clase de categorías
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +30,12 @@ public class JuegosController {
     public String mostrarJuegos(Model model) {
         var juegos = juegosService.getJuegos();
         model.addAttribute("juegos", juegos);
+        List<Categorias> categorias2 = juegosService.cateMask();
+        Map<Long, String> categoriasMap = categorias2.stream()
+        .collect(Collectors.toMap(Categorias::getIdCategoria, Categorias::getDescripcion));
         List<Categorias> categorias = juegosService.getCates();
         model.addAttribute("categorias", categorias);
+        model.addAttribute("categoriasMap", categoriasMap);
         return "juego/juegos";
     }
 
@@ -41,7 +47,6 @@ public class JuegosController {
 
     @PostMapping("/guardar")
     public String hotelGuardar(Juegos juego) {
-        System.out.println("holaaaaaaaaaaa, ayudaaaa"+juego.getIdcategoria());
         juegosService.save(juego);
         return "redirect:/juego/juegos";
     }

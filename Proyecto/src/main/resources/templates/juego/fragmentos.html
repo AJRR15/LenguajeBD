@@ -106,7 +106,7 @@
                                                 <td style="color: white; "th:text="${juego.empresa}"></td>
                                                 <td style="color: white; "th:text="'$' + ${juego.precio}"></td> <!-- Agregar signo de dólar al precio -->
                                                 <td style="color: white; "th:text="${juego.existencias}"></td>
-                                                <td style="color: white; "th:text="${juego.idcategoria}"></td><!-- Mostrar solo el nombre de la categoría -->
+                                                <td style="color: white; "th:text="${categoriasMap[juego.idcategoria]}"></td><!-- Mostrar solo el nombre de la categoría -->
                                                 <td style="color: white; "th:text="${juego.estado}"></td>
                                                 <td>
                                                     <div>

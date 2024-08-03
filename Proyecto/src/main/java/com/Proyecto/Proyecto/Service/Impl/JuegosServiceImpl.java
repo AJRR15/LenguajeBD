@@ -55,4 +55,9 @@ public class JuegosServiceImpl implements JuegosService {
     public List<Juegos> getJuegosbycate(Long id) {
         return juegosDao.getJuegosbycate(id);
     }
+
+    @Override
+    public List<Categorias> cateMask() {
+        return juegosDao.getdesc();
+    }
 }

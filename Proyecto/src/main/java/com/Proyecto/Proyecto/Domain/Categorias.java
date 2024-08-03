@@ -23,19 +23,15 @@ public class Categorias implements Serializable {
     @Column(name = "ESTADO")
     private boolean estado;
 
-    @OneToMany
-    @JoinColumn(name = "ID_CATEGORIA", updatable = false)
-    List<Juegos> juegos;
 
     public Categorias() {
     }
 
-    public Categorias(Long idCategoria, String descripcion, String rutaImagen, boolean estado, List<Juegos> juegos) {
+    public Categorias(Long idCategoria, String descripcion, String rutaImagen, boolean estado) {
         this.idCategoria = idCategoria;
         this.descripcion = descripcion;
         this.rutaImagen = rutaImagen;
         this.estado = estado;
-        this.juegos = juegos;
     }
 
    

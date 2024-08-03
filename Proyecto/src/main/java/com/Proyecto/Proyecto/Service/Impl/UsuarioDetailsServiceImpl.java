@@ -28,8 +28,6 @@ import com.Proyecto.Proyecto.Service.UsuarioDetailsService;
 public class UsuarioDetailsServiceImpl implements UsuarioDetailsService, UserDetailsService{
     @Autowired
     private UsuarioDao usuarioDao;
-    @Autowired
-    private HttpSession session;
     
     @Override
     @Transactional(readOnly=true)

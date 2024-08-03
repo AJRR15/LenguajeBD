@@ -12,6 +12,8 @@ public interface JuegosService {
     List<Juegos> getJuegosbycate(Long id);
 
     Juegos getJuego(Juegos juegos);
+    
+    public List<Categorias> cateMask();
 
     public void save(Juegos juegos);
 
