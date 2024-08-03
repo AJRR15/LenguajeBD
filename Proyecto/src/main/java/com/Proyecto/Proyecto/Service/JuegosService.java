@@ -1,22 +1,20 @@
 package com.Proyecto.Proyecto.Service;
 
+import com.Proyecto.Proyecto.Domain.Categorias;
 import com.Proyecto.Proyecto.Domain.Juegos;
 import java.util.List;
 
 public interface JuegosService {
-    List<Juegos> getJuegos(String nombre);
+    List<Juegos> getJuegos();
+    
+    List<Categorias> getCates();
 
     Juegos getJuego(Juegos juegos);
 
-    void save(Juegos juegos);
+    public void save(Juegos juegos);
 
-    void delete(Juegos juegos);
-
-    List<Juegos> findByPrecioBetweenOrderByPrecio(double precioInf, double precioSup);
-
-    List<Juegos> getJuegosPorCategoria(Long categoriaId);
-
-    List<Juegos> getJuegosConFiltros(Double precioInf, Double precioSup, Long categoriaId);
+    public void delete(Juegos juegos);
     
-    List<Juegos> findByNombreContaining(String nombre);
+    public void update(Long JID , String IMG ,String NOM, String EMP ,double PREC , int EXI, boolean EST , Long ID_CAT);
+
 }

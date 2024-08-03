@@ -27,11 +27,10 @@ public class Juegos implements Serializable {
     private int existencias;
     @Column(name = "ESTADO")
     private boolean estado;
-
+    @Column(name="ID_CATEGORIA")
+    private Long idcategoria;
     
-    @ManyToOne
-    @JoinColumn(name="ID_CATEGORIA")
-    private Categorias categoria;
+    
 
     public Juegos() {
     }

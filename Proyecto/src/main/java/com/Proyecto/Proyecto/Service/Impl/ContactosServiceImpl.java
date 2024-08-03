@@ -25,11 +25,7 @@ public class ContactosServiceImpl implements ContactosService {
     @Override
     @Transactional(readOnly = true)
     public List<Contactos> getContactos(String nombre) {
-         if (nombre != null && !nombre.isEmpty()) {
-             return contactosDao.findByNombre(nombre);
-         } else {
-             return contactosDao.findAll();
-         }
+        return contactosDao.findAll();
     }
 
     @Override

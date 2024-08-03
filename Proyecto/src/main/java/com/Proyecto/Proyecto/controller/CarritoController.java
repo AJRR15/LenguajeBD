@@ -42,58 +42,12 @@ public class CarritoController {
         // Añadir los parámetros al modelo para mantener el estado
         model.addAttribute("queryString", queryString);
 
-        // Lógica para obtener juegos con filtros
-        List<Juegos> juegos = juegosService.getJuegosConFiltros(precioInf, precioSup, categoriaId);
-        model.addAttribute("juegos", juegos);
-
         // Obtener todas las categorías y agregarlas al modelo
         List<Categorias> categorias = categoriaService.getCategorias();
         model.addAttribute("categorias", categorias);
 
         return "/index";
     }
-
-    @PostMapping("/query1")
-    public String consultaQuery1(@RequestParam(value = "precioInf") double precioInf,
-            @RequestParam(value = "precioSup") double precioSup,
-            @RequestParam(name = "categoriaId", required = false) Long categoriaId,
-            Model model) {
-        List<Juegos> juegos = juegosService.getJuegosConFiltros(precioInf, precioSup, categoriaId);
-        model.addAttribute("juegos", juegos);
-        model.addAttribute("precioInf", precioInf);
-        model.addAttribute("precioSup", precioSup);
-
-        List<Categorias> categorias = categoriaService.getCategorias();
-        model.addAttribute("categorias", categorias);
-
-        return "/index";
-    }
-
-    @GetMapping("/juegosPorCategoria")
-    public String mostrarJuegosPorCategoria(@RequestParam(name = "categoriaId", required = false) Long categoriaId, Model model) {
-        List<Juegos> juegos;
-        if (categoriaId != null) {
-            juegos = juegosService.getJuegosPorCategoria(categoriaId);
-        } else {
-            juegos = juegosService.getJuegos(null); // Obtener todos los juegos
-        }
-        model.addAttribute("juegos", juegos);
-
-        // Obtener todas las categorías y agregarlas al modelo
-        List<Categorias> categorias = categoriaService.getCategorias();
-        model.addAttribute("categorias", categorias);
-
-        return "/index"; // Ruta correcta para la vista de juegos
-    }
-
-    @PostMapping("/filtrarPorNombre")
-    public String filtrarPorNombre(@RequestParam(value = "nombre", required = false) String nombre,
-            Model model) {
-        List<Juegos> juegos = juegosService.findByNombreContaining(nombre);
-        model.addAttribute("juegos", juegos);
-        return "/index"; // Asegúrate de que la vista correspondiente sea la correcta
-    }
-    //Para ver el carrito
 
     @GetMapping("/carrito/listado")
     public String inicio(Model model) {

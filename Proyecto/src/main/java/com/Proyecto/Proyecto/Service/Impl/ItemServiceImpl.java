@@ -12,7 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.Proyecto.Proyecto.Dao.FacturaDao;
-import com.Proyecto.Proyecto.Dao.Juegosdao;
+import com.Proyecto.Proyecto.Dao.JuegosDao;
 import com.Proyecto.Proyecto.Domain.Factura;
 import com.Proyecto.Proyecto.Domain.Item;
 import com.Proyecto.Proyecto.Domain.Juegos;
@@ -100,7 +100,7 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private Detalle_FacturaDao Detalle_FacturaDao;
     @Autowired
-    private Juegosdao juegosDao;
+    private JuegosDao juegosDao;
 
     @Override
     public void facturar() {
@@ -127,9 +127,9 @@ public class ItemServiceImpl implements ItemService {
             System.out.println("Juego: " + i.getNombre()+ " Cantidad: " + i.getCantidad() + " Total: " + i.getPrecio() * i.getCantidad());
             Detalle_Factura detalle_factura = new Detalle_Factura(factura.getIdFactura(),i.getId_juego(), i.getPrecio(), i.getCantidad());
             Detalle_FacturaDao.save(detalle_factura);
-            Juegos juegos = juegosDao.getReferenceById(i.getId_juego());
+            Juegos juegos = juegosDao.getIdJuegos(i.getId_juego());
             juegos.setExistencias(juegos.getExistencias()- i.getCantidad());
-            juegosDao.save(juegos);
+            juegosDao.saveJuegos(juegos);
             total += i.getPrecio() * i.getCantidad();
         }
         factura.setTotal(total);

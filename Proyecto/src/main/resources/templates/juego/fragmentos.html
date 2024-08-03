@@ -50,13 +50,13 @@
                                     <input type="number" class="form-control" name="existencias" required="true" />
                                 </div>
                                 <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="activo" name="activo" />
-                                    <label style="color: white; "class="form-check-label" for="activo">[[#{categoria.activo}]]</label>
+                                    <input type="checkbox" class="form-check-input" id="estado" name="estado" />
+                                    <label style="color: white; "class="form-check-label" for="estado">[[#{categoria.activo}]]</label>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="id_categoria">[[#{categoria.categoria}]]</label>
+                                    <label for="idcategoria">[[#{categoria.categoria}]]</label>
                                     <select class="form-select" 
-                                            name="categoria.idCategoria"
+                                            name="idcategoria"
                                             required="true">
                                         <option th:each="c : ${categorias}" 
                                                 th:value="${c.idCategoria}"
@@ -106,8 +106,8 @@
                                                 <td style="color: white; "th:text="${juego.empresa}"></td>
                                                 <td style="color: white; "th:text="'$' + ${juego.precio}"></td> <!-- Agregar signo de dólar al precio -->
                                                 <td style="color: white; "th:text="${juego.existencias}"></td>
-                                                <td style="color: white; "th:text="${juego.categoria.descripcion}"></td> <!-- Mostrar solo el nombre de la categoría -->
-                                                <td style="color: white; "th:text="${juego.activo}"></td>
+                                                <td style="color: white; "th:text="${juego.idcategoria}"></td><!-- Mostrar solo el nombre de la categoría -->
+                                                <td style="color: white; "th:text="${juego.estado}"></td>
                                                 <td>
                                                     <div>
                                                         <a th:href="@{/juego/eliminar/}+${juego.id_juego}" style="background-color: rgba(255, 0, 0, 0.5); color: white; "class="btn btn-trasparent" sec:authorize="hasRole('ROLE_ADMIN')">
@@ -131,78 +131,12 @@
                 </div>
             </div>
         </section>
-        <section th:fragment="filtros">
-            <div class="row py-2">
-                <div class="col-md-1"></div>
-                <div class="col-md-3">
-                    <form method="POST" th:action="@{/query1}" class="was-validated">
-                        <div class="card" style="background-color: rgba(0, 0, 0, 0.5);">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="precioInf" style="color: white;" th:text="#{filtro.preciomin}"></label>
-                                    <input type="number" class="form-control" th:value="${precioInf}" th:name="precioInf" required="true" />
-                                </div>
-                                <div class="mb-3">
-                                    <label for="precioSup" style="color: white;" th:text="#{filtro.preciomax}"></label>
-                                    <input type="number" class="form-control" th:value="${precioSup}" th:name="precioSup" required="true" />
-                                </div>
-                            </div>
-                            <div class="card-footer text-center">
-                                <button type="submit" style="background-color: rgba(255, 0, 255, 0.5); color: white; " class="btn btn-trasparent">
-                                    <i class="fas fa-check"></i> <span th:text="#{filtro.buscar}"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Agregar formulario para filtrar por nombre de juego -->
-                <div class="col-md-3">
-                    <form method="POST" th:action="@{/filtrarPorNombre}" class="was-validated">
-                        <div class="card" style="background-color: rgba(0, 0, 0, 0.5);">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="nombre" style="color: white;" th:text="#{filtro.nombrejuego}"></label>
-                                    <input type="text" class="form-control" th:value="${nombre}" name="nombre" required="true" />
-                                </div>
-                            </div>
-                            <div class="card-footer text-center">
-                                <button type="submit" style="background-color: rgba(255, 0, 255, 0.7); color: white; " class="btn btn-trasparent">
-                                    <i class="fas fa-search"></i> <span th:text="#{filtro.buscar}"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Agregar formulario para filtrar por categoría -->
-                <div class="col-md-3">
-                    <form method="GET" th:action="@{/juegosPorCategoria}" class="was-validated">
-                        <div class="card" style="background-color: rgba(0, 0, 0, 0.5);">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="categoriaId" style="color: white;" th:text="#{filtro.filtrarcat}"></label>
-                                    <select name="categoriaId" class="form-select">
-                                        <option value="" th:text="#{filtro.todascategorias}"></option>
-                                        <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.descripcion}"></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="card-footer text-center">
-                                <button type="submit" style="background-color: rgba(255, 0, 255, 0.5); color: white; " class="btn btn-trasparent">
-                                    <i class="fas fa-filter"></i> <span th:text="#{filtro.filtrar}"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>1        <!-- 4 Fragmento que se utiliza en la página modifca.html -->
+        <!-- 4 Fragmento que se utiliza en la página modifca.html -->
         <section th:fragment="ModificarJuegos">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form method="POST" th:action="@{/juego/guardar}" th:object="${juego}" class="was-validated" enctype="multipart/form-data">
+                        <form method="POST" th:action="@{/juego/modificar2}" th:object="${juego}" class="was-validated" enctype="multipart/form-data">
                             <input type="hidden" name="id_juego" th:field="*{id_juego}" />
                             <section th:replace="~{juego/fragmentos :: BotonesModificar}" />
                             <div id="details">
@@ -225,19 +159,19 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="precio">[[#{juego.precio}]]</label>
-                                            <input type="number" class="form-control" name="precio" th:field="*{precio}" required="true">
+                                            <input type="number" step="0.01" min="0" class="form-control" name="precio" th:field="*{precio}" required="true">
                                         </div>
                                         <div class="mb-3">
                                             <label for="existencias">[[#{juego.Existencia}]]</label>
                                             <input type="number" class="form-control" name="existencias" th:field="*{existencias}" required="true">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="activo">[[#{categoria.activo}]]</label>
-                                            <input class="form-check-input" type="checkbox" name="activo" id="activo" th:field="*{activo}">
+                                            <label for="estado">[[#{categoria.activo}]]</label>
+                                            <input class="form-check-input" type="checkbox" name="estado" id="estado" th:field="*{estado}">
                                         </div>
                                         <div class="mb-3">
                                             <label for="id_categoria">[[#{categoria.categoria}]]</label>
-                                            <select class="form-select" name="categoria.idCategoria" required="true" th:field="*{categoria.idCategoria}">
+                                            <select class="form-select" name="idcategoria" required="true" th:field="*{idcategoria}">
                                                 <option value="">Selecciona una categoría</option>
                                                 <option th:each="c : ${categorias}" th:value="${c.idCategoria}" th:text="${c.descripcion}"></option>
                                             </select>

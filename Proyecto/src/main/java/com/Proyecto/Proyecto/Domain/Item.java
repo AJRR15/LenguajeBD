@@ -25,7 +25,7 @@ public class Item extends Juegos {
         super.setPrecio(juegos.getPrecio());
         super.setExistencias(juegos.getExistencias());
         super.setEstado(juegos.isEstado());
-        super.setCategoria(juegos.getCategoria());
+        super.setIdcategoria(juegos.getIdcategoria());
         this.cantidad = 0;
     }
 

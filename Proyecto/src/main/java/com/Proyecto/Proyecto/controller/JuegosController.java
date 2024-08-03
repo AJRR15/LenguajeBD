@@ -25,67 +25,14 @@ public class JuegosController {
     private CategoriaService categoriaService;
 
     @GetMapping("/juegos")
-    public String mostrarJuegos(@RequestParam(name = "precioInf", required = false) Double precioInf,
-            @RequestParam(name = "precioSup", required = false) Double precioSup,
-            @RequestParam(name = "categoriaId", required = false) Long categoriaId,
-            Model model,
-            HttpServletRequest request) {
-        // Leer los parámetros de la URL
-        String queryString = request.getQueryString();
-        // Añadir los parámetros al modelo para mantener el estado
-        model.addAttribute("queryString", queryString);
-
-        // Lógica para obtener juegos con filtros
-        List<Juegos> juegos = juegosService.getJuegosConFiltros(precioInf, precioSup, categoriaId);
+    public String mostrarJuegos(Model model) {
+        var juegos = juegosService.getJuegos();
         model.addAttribute("juegos", juegos);
-
-        // Obtener todas las categorías y agregarlas al modelo
-        List<Categorias> categorias = categoriaService.getCategorias();
+        List<Categorias> categorias = juegosService.getCates();
         model.addAttribute("categorias", categorias);
-
         return "juego/juegos";
     }
 
-    @PostMapping("/query1")
-    public String consultaQuery1(@RequestParam(value = "precioInf") double precioInf,
-            @RequestParam(value = "precioSup") double precioSup,
-            @RequestParam(name = "categoriaId", required = false) Long categoriaId,
-            Model model) {
-        List<Juegos> juegos = juegosService.getJuegosConFiltros(precioInf, precioSup, categoriaId);
-        model.addAttribute("juegos", juegos);
-        model.addAttribute("precioInf", precioInf);
-        model.addAttribute("precioSup", precioSup);
-
-        List<Categorias> categorias = categoriaService.getCategorias();
-        model.addAttribute("categorias", categorias);
-
-        return "juego/juegos";
-    }
-
-    @GetMapping("/juegosPorCategoria")
-    public String mostrarJuegosPorCategoria(@RequestParam(name = "categoriaId", required = false) Long categoriaId, Model model) {
-        List<Juegos> juegos;
-        if (categoriaId != null) {
-            juegos = juegosService.getJuegosPorCategoria(categoriaId);
-        } else {
-            juegos = juegosService.getJuegos(null); // Obtener todos los juegos
-        }
-        model.addAttribute("juegos", juegos);
-
-        // Obtener todas las categorías y agregarlas al modelo
-        List<Categorias> categorias = categoriaService.getCategorias();
-        model.addAttribute("categorias", categorias);
-
-        return "juego/juegos"; // Ruta correcta para la vista de juegos
-    }
-
-    @PostMapping("/filtrarPorNombre")
-    public String filtrarPorNombre(@RequestParam(value = "nombre", required = false) String nombre,
-            Model model) {
-        List<Juegos> juegos = juegosService.findByNombreContaining(nombre);
-        model.addAttribute("juegos", juegos);
-        return "juego/juegos"; // Asegúrate de que la vista correspondiente sea la correcta
-    }
 
     @GetMapping("/nuevo")
     public String hotelNuevo(Juegos juego) {
@@ -94,6 +41,7 @@ public class JuegosController {
 
     @PostMapping("/guardar")
     public String hotelGuardar(Juegos juego) {
+        System.out.println("holaaaaaaaaaaa, ayudaaaa"+juego.getIdcategoria());
         juegosService.save(juego);
         return "redirect:/juego/juegos";
     }
@@ -110,9 +58,22 @@ public class JuegosController {
         model.addAttribute("juego", juego);
 
         // Obtener todas las categorías y agregarlas al modelo
-        List<Categorias> categorias = categoriaService.getCategorias();
+        List<Categorias> categorias = juegosService.getCates();
         model.addAttribute("categorias", categorias);
 
         return "/juego/modifica";
+    }
+    
+    @PostMapping("/modificar2")
+    public String categoriaModificar2(@RequestParam("id_juego") Long idJuego,
+        @RequestParam("imagen") String imagen,
+        @RequestParam("nombre") String nombre,
+        @RequestParam("empresa") String empresa,
+        @RequestParam("precio") double precio,
+        @RequestParam("existencias") int existencias,
+        @RequestParam("estado") boolean estado,
+        @RequestParam("idcategoria") Long idcategoria) {
+        juegosService.update(idJuego,imagen,nombre,empresa,precio,existencias,estado,idcategoria);
+        return "redirect:/juego/juegos";
     }
 }
