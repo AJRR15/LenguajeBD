@@ -12,11 +12,10 @@ import java.util.List;
  * @author alejh
  */
 public interface ContactosService {
-    List<Contactos> getContactos(String nombre);
+    
+    List<Contactos> getContactos();
 
-    Contactos getContacto(Contactos contactos);
+    public void save(Contactos contactos);
 
-    void save(Contactos contactos);
-
-    void delete(Contactos contactos);
+    public void delete(Contactos contactos);
 }

@@ -8,6 +8,8 @@ public interface JuegosService {
     List<Juegos> getJuegos();
     
     List<Categorias> getCates();
+    
+    List<Juegos> getJuegosbycate(Long id);
 
     Juegos getJuego(Juegos juegos);
 

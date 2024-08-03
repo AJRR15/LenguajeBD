@@ -153,5 +153,32 @@ public class JuegosDao {
         List<Categorias> cateList = (List<Categorias>) results.get("DATOS");
         return cateList;
     }
+    
+    public List<Juegos> getJuegosbycate(Long id) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("GET_JUEGOSBYCATEGORIA")
+                .declareParameters(new SqlParameter("CID", Types.BIGINT), new SqlParameter("DATOS", Types.REF_CURSOR))
+                .returningResultSet("DATOS", new RowMapper<Juegos>() {
+                    @Override
+                    public Juegos mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Juegos juego = new Juegos();
+                        juego.setId_juego(rs.getLong("ID_JUEGO"));
+                        juego.setImagen(rs.getString("IMAGEN"));
+                        juego.setNombre(rs.getString("NOMBRE"));
+                        juego.setEmpresa(rs.getString("EMPRESA"));
+                        juego.setPrecio(rs.getDouble("PRECIO"));
+                        juego.setExistencias(rs.getInt("EXISTENCIAS"));
+                        juego.setIdcategoria(rs.getLong("ID_CATEGORIA"));
+                        juego.setEstado(rs.getBoolean("ESTADO"));
+                        return juego;
+                    }
+                });
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("CID", id);
+        Map<String, Object> results = simpleJdbcCall.execute(mapSqlParameterSource);
+        List<Juegos> juegoList = (List<Juegos>) results.get("DATOS");
+        return juegoList;
+    }
 
 }

@@ -23,7 +23,7 @@ public class ContactosController {
 
     @GetMapping("/contactos")
     public String mostrarPaginaContacto(Model model) {
-        var contactos = contactosService.getContactos(null);
+        var contactos = contactosService.getContactos();
         model.addAttribute("contactos", contactos);
         return "contacto/listado";
     }

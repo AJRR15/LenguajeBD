@@ -24,26 +24,20 @@ public class ContactosServiceImpl implements ContactosService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Contactos> getContactos(String nombre) {
-        return contactosDao.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Contactos getContacto(Contactos contactos) {
-        return contactosDao.findById(contactos.getIdContacto()).orElse(null);
+    public List<Contactos> getContactos() {
+        return contactosDao.getListContactos();
     }
 
     @Override
     @Transactional
     public void save(Contactos contactos) {
-        contactosDao.save(contactos);
+        contactosDao.saveContacto(contactos);
     }
 
     @Override
     @Transactional
     public void delete(Contactos contactos) {
-        contactosDao.delete(contactos);
+        contactosDao.deleteContacto(contactos.getIdContacto());
     }
 
 }

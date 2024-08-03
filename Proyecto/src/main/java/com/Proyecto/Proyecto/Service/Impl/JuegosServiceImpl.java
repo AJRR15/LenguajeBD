@@ -50,4 +50,9 @@ public class JuegosServiceImpl implements JuegosService {
     public void update(Long JID , String IMG ,String NOM, String EMP ,double PREC , int EXI, boolean EST , Long ID_CAT) {
         juegosDao.updateJuegos(JID,IMG,NOM,EMP,PREC,EXI,EST,ID_CAT);
     }
+
+    @Override
+    public List<Juegos> getJuegosbycate(Long id) {
+        return juegosDao.getJuegosbycate(id);
+    }
 }
