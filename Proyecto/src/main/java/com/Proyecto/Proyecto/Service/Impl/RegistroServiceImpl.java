@@ -70,7 +70,7 @@ public class RegistroServiceImpl implements RegistroService {
                         usuario.getCorreo())) {
             String clave = demeClave();
             usuario.setPassword(clave);
-            usuario.setEstado(1);
+            usuario.setEstado(true);
             usuarioService.save(usuario, 1);
             enviaCorreoActivar(usuario, clave);
             mensaje = String.format(
@@ -109,7 +109,7 @@ public class RegistroServiceImpl implements RegistroService {
         if (usuario2 != null) {
             String clave = demeClave();
             usuario2.setPassword(clave);
-            usuario2.setEstado(1);
+            usuario2.setEstado(true);
             usuarioService.save(usuario2, 1);
             enviaCorreoRecordar(usuario2, clave);
             mensaje = String.format(

@@ -19,28 +19,34 @@ import com.Proyecto.Proyecto.Dao.UsuarioDao;
 import com.Proyecto.Proyecto.Domain.Rol;
 import com.Proyecto.Proyecto.Domain.Usuario;
 import com.Proyecto.Proyecto.Service.UsuarioDetailsService;
+import java.util.List;
 
 /**
  *
  * @author hhern
  */
 @Service("userDetailsService")
-public class UsuarioDetailsServiceImpl implements UsuarioDetailsService, UserDetailsService{
+public class UsuarioDetailsServiceImpl implements UsuarioDetailsService, UserDetailsService {
+
     @Autowired
     private UsuarioDao usuarioDao;
-    
+
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioDao.findByUsername(username);
-        if (usuario==null){
+        Usuario usuario = usuarioDao.getUsername(username);
+        System.out.println("holaaaaa" + usuario);
+        if (usuario == null) {
             throw new UsernameNotFoundException(username);
         }
-        var roles = new ArrayList<GrantedAuthority>();
-        for (Rol rol : usuario.getRoles()){
-            roles.add(new SimpleGrantedAuthority(rol.getNombre()));
+        List<String> rolesString = usuarioDao.GET_ROLES(usuario.getIdUsuario());
+        List<GrantedAuthority> roles = new ArrayList<>();
+
+        for (String role : rolesString) {
+            roles.add(new SimpleGrantedAuthority(role));
         }
-        return new User(usuario.getUsername(),usuario.getPassword(),roles);
+        System.out.println("ayudaaaa" + roles);
+        return new User(usuario.getUsername(), usuario.getPassword(), roles);
     }
-    
+
 }

@@ -36,16 +36,12 @@ public class Usuario implements Serializable{
     @Column(name = "TELEFONO")
     private String telefono;
     @Column(name = "ESTADO")
-    private int estado;
-    
-    @OneToMany
-    @JoinColumn(name ="ID_USUARIO")
-    private List<Rol> roles;
+    private boolean estado;
 
     public Usuario() {
     }
 
-    public Usuario(Long idUsuario, String username, String password, String nombre, String apellidos, String correo, String telefono, int estado, List<Rol> roles) {
+    public Usuario(Long idUsuario, String username, String password, String nombre, String apellidos, String correo, String telefono, boolean estado) {
         this.idUsuario = idUsuario;
         this.username = username;
         this.password = password;
@@ -54,7 +50,6 @@ public class Usuario implements Serializable{
         this.correo = correo;
         this.telefono = telefono;
         this.estado = estado;
-        this.roles = roles;
     }
     
     

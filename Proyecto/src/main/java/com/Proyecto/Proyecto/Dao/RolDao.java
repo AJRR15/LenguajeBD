@@ -22,7 +22,7 @@ public class RolDao  {
     
     public void save(Rol rol) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("admin_lenguajes")
+                .withSchemaName("ADMINISTRADOR1")
                 .withProcedureName("ADD_ROL")
                 .declareParameters(
                         new SqlParameter("RNAME", Types.VARCHAR),

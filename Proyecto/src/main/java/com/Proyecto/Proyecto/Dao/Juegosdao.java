@@ -23,7 +23,7 @@ public class JuegosDao {
 
     public List<Juegos> getListJuegos() {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("admin_lenguajes")
+                .withSchemaName("ADMINISTRADOR1")
                 .withProcedureName("GET_JUEGOS")
                 .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Juegos>() {
@@ -49,7 +49,7 @@ public class JuegosDao {
 
     public Juegos getIdJuegos(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("admin_lenguajes")
+                .withSchemaName("ADMINISTRADOR1")
                 .withProcedureName("GET_ONE_JUEGO")
                 .declareParameters(new SqlParameter("JID", Types.BIGINT), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Juegos>() {
@@ -76,7 +76,7 @@ public class JuegosDao {
 
     public void saveJuegos(Juegos juego) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("admin_lenguajes")
+                .withSchemaName("ADMINISTRADOR1")
                 .withProcedureName("ADD_JUEGO")
                 .declareParameters(
                         new SqlParameter("IMG", Types.VARCHAR),
@@ -100,7 +100,7 @@ public class JuegosDao {
 
     public void deleteJuegos(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("admin_lenguajes")
+                .withSchemaName("ADMINISTRADOR1")
                 .withProcedureName("DELETE_JUEGO")
                 .declareParameters(new SqlParameter("JID", Types.BIGINT));
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -110,7 +110,7 @@ public class JuegosDao {
 
     public void updateJuegos(Long JID , String IMG ,String NOM, String EMP ,double PREC , int EXI, boolean EST , Long ID_CAT) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("admin_lenguajes")
+                .withSchemaName("ADMINISTRADOR1")
                 .withProcedureName("UPDATE_JUEGO")
                 .declareParameters(
                         new SqlParameter("JID", Types.BIGINT),
@@ -136,7 +136,7 @@ public class JuegosDao {
 
     public List<Categorias> getCategorias() {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("admin_lenguajes")
+                .withSchemaName("ADMINISTRADOR1")
                 .withProcedureName("GET_CATEGORIAS")
                 .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Categorias>() {
@@ -156,7 +156,7 @@ public class JuegosDao {
     
     public List<Juegos> getJuegosbycate(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("admin_lenguajes")
+                .withSchemaName("ADMINISTRADOR1")
                 .withProcedureName("GET_JUEGOSBYCATEGORIA")
                 .declareParameters(new SqlParameter("CID", Types.BIGINT), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Juegos>() {
@@ -183,7 +183,7 @@ public class JuegosDao {
     
     public List<Categorias> getdesc() {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("admin_lenguajes")
+                .withSchemaName("ADMINISTRADOR1")
                 .withProcedureName("GET_CATEGORIA_DESC")
                 .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Categorias>() {
