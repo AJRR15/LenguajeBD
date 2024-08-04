@@ -29,8 +29,8 @@ public class UsuarioDao {
 
     public List<Usuario> getListUsuario() {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
-                .withProcedureName("GET_USUARIO")
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("GET_USUARIOS")
                 .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
                     @Override
@@ -55,8 +55,8 @@ public class UsuarioDao {
 
     public Usuario getIdUsuario(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
-                .withProcedureName("GET_IDUSUARIO")
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("GET_USUARIOBYID")
                 .declareParameters(new SqlParameter("UID", Types.BIGINT), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
                     @Override
@@ -82,8 +82,8 @@ public class UsuarioDao {
 
     public Usuario getUsername(String username) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
-                .withProcedureName("GET_USERNAME")
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("GET_USUARIOBYUSERNAME")
                 .declareParameters(new SqlParameter("UNAME", Types.VARCHAR), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
                     @Override
@@ -109,7 +109,7 @@ public class UsuarioDao {
 
     public Usuario getUsernameandPassword(String username, String password) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_USERNAMEANDPASSWORD")
                 .declareParameters(new SqlParameter("UNAME", Types.VARCHAR), new SqlParameter("PASS", Types.VARCHAR), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
@@ -135,10 +135,10 @@ public class UsuarioDao {
         return usuarioList.isEmpty() ? null : usuarioList.get(0);
     }
 
-    public Usuario getUsernameandCorreo(String username, String correo) {
+    public Usuario getUsernameORCorreo(String username, String correo) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
-                .withProcedureName("GET_USERNAMEANDCORREO")
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("GET_USERNAMEORCORREO")
                 .declareParameters(new SqlParameter("UNAME", Types.VARCHAR), new SqlParameter("CORR", Types.VARCHAR), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
                     @Override
@@ -165,55 +165,49 @@ public class UsuarioDao {
 
     public void saveUsuario(Usuario usuario) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("ADD_USUARIO")
                 .declareParameters(
-                        new SqlParameter("ID_USUARIO", Types.BIGINT),
-                        new SqlParameter("USERNAME", Types.VARCHAR),
-                        new SqlParameter("PASSWORD", Types.VARCHAR),
-                        new SqlParameter("NOMBRE", Types.VARCHAR),
-                        new SqlParameter("APELLIDOS", Types.VARCHAR),
-                        new SqlParameter("CORREO", Types.VARCHAR),
-                        new SqlParameter("TELEFONO", Types.VARCHAR),
-                        new SqlParameter("ESTADO", Types.BOOLEAN)
+                        new SqlParameter("UNAME", Types.VARCHAR),
+                        new SqlParameter("PASS", Types.VARCHAR),
+                        new SqlParameter("UNOM", Types.VARCHAR),
+                        new SqlParameter("APELL", Types.VARCHAR),
+                        new SqlParameter("CORRE", Types.VARCHAR),
+                        new SqlParameter("TEL", Types.VARCHAR),
+                        new SqlParameter("EST", Types.BOOLEAN)
                 );
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("ID_USUARIO", usuario.getIdUsuario());
-        mapSqlParameterSource.addValue("USERNAME", usuario.getUsername());
-        mapSqlParameterSource.addValue("PASSWORD", usuario.getPassword());
-        mapSqlParameterSource.addValue("NOMBRE", usuario.getNombre());
-        mapSqlParameterSource.addValue("APELLIDOS", usuario.getApellidos());
-        mapSqlParameterSource.addValue("CORREO", usuario.getCorreo());
-        mapSqlParameterSource.addValue("TELEFONO", usuario.getTelefono());
-        mapSqlParameterSource.addValue("ESTADO", usuario.isEstado());
+        mapSqlParameterSource.addValue("UNAME", usuario.getUsername());
+        mapSqlParameterSource.addValue("PASS", usuario.getPassword());
+        mapSqlParameterSource.addValue("UNOM", usuario.getNombre());
+        mapSqlParameterSource.addValue("APELL", usuario.getApellidos());
+        mapSqlParameterSource.addValue("CORRE", usuario.getCorreo());
+        mapSqlParameterSource.addValue("TEL", usuario.getTelefono());
+        mapSqlParameterSource.addValue("EST", usuario.isEstado());
         simpleJdbcCall.execute(mapSqlParameterSource);
     }
 
     public void deleteUsuario(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("DELETE_USUARIO")
-                .declareParameters(
-                        new SqlParameter("ID_USUARIO", Types.BIGINT)
-                );
+                .declareParameters(new SqlParameter("USEID", Types.BIGINT));
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("ID_USUARIO", id);
+        mapSqlParameterSource.addValue("USEID", id);
         simpleJdbcCall.execute(mapSqlParameterSource);
     }
 
     public boolean USUARIO_EXISTE(String username, String correo) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withFunctionName("USUARIO_EXISTE")
                 .declareParameters(
                         new SqlParameter("UNAME", Types.VARCHAR),
-                        new SqlParameter("CORR", Types.VARCHAR)
+                        new SqlParameter("CORRE", Types.VARCHAR)
                 );
-
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("UNAME", username);
-        mapSqlParameterSource.addValue("CORR", correo);
-
+        mapSqlParameterSource.addValue("CORRE", correo);
         Map<String, Object> results = simpleJdbcCall.execute(mapSqlParameterSource);
         Integer result = (Integer) results.get("RETURN_VALUE");
         return result != null && result == 1;
@@ -222,7 +216,7 @@ public class UsuarioDao {
     
     public List<String> GET_ROLES(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_ROLES")
                 .declareParameters(new SqlParameter("UID", Types.BIGINT), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Rol>() {
@@ -239,15 +233,5 @@ public class UsuarioDao {
         List<String> rolList = (List<String>) results.get("DATOS");
         return rolList;
     }
-    /*
-    @Query(value="SELECT * from usuario", nativeQuery = true)
-    List<Usuario> getUsuarios();
-    
-    
-    Usuario findByUsername(String username);
-    Usuario findByUsernameAndPassword(String username, String Password);
-    Usuario findByUsernameOrCorreo(String username, String Correo);
-    boolean existsByUsernameOrCorreo(String username, String Correo);
-    
-     */
+
 }

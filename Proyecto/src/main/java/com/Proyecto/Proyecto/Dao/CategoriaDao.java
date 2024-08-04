@@ -23,7 +23,7 @@ public class CategoriaDao {
 
     public List<Categorias> getListCategorias() {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_CATEGORIA")
                 .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Categorias>() {
@@ -45,7 +45,7 @@ public class CategoriaDao {
 
     public Categorias getOneCategoria(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_ONE_CATEGORIA")
                 .declareParameters(new SqlParameter("CID", Types.BIGINT),new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Categorias>() {
@@ -68,7 +68,7 @@ public class CategoriaDao {
 
     public void saveCategoria(Categorias categoria) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("ADD_CATEGORIA")
                 .declareParameters(
                         new SqlParameter("DESCRIP", Types.VARCHAR),
@@ -84,7 +84,7 @@ public class CategoriaDao {
     
     public void deleteCategoria(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("DELETE_CATEGORIA")
                 .declareParameters(new SqlParameter("CID", Types.BIGINT));
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -94,7 +94,7 @@ public class CategoriaDao {
     
     public void updateCategoria(Long CID, String DESCRIP,String IMG,boolean ACT) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("UPDATE_CATEGORIA")
                 .declareParameters(
                         new SqlParameter("CID", Types.BIGINT),

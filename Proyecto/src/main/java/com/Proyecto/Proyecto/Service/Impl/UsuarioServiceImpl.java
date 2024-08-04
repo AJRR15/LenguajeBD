@@ -52,7 +52,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     @Transactional(readOnly = true)
     public Usuario getUsuarioPorUsernameOCorreo(String username, String correo) {
-        return usuarioDao.getUsernameandCorreo(username, correo);
+        return usuarioDao.getUsernameORCorreo(username, correo);
     }
 
     @Override

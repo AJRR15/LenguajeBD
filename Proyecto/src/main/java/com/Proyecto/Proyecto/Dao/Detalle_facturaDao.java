@@ -21,7 +21,7 @@ public class Detalle_FacturaDao  {
 
     public void savedetalle(Detalle_Factura detalle) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("ADD_DETALLE_FACTURA")
                 .declareParameters(
                         new SqlParameter("IDFACT", Types.BIGINT),

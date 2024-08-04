@@ -25,7 +25,7 @@ public class FacturaDao {
 
     public void savefactura(Factura factura) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("ADD_FACTURA")
                 .declareParameters(
                         new SqlParameter("USID", Types.BIGINT),
@@ -41,7 +41,7 @@ public class FacturaDao {
     
     public void updatefactura(Long id,Double total) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("UPDATE_FACTURA")
                 .declareParameters(
                         new SqlParameter("FID", Types.BIGINT),
@@ -55,7 +55,7 @@ public class FacturaDao {
     
     public Factura getfactura(Date FECHA) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                .withSchemaName("ADMINISTRADOR1")
+                .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_FACTURA_ID")
                 .declareParameters(new SqlParameter("FECH", Types.DATE),new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Factura>() {
