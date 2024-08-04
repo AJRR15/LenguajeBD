@@ -87,7 +87,8 @@
                                         <tr><th>#</th>
                                             <th>[[#{usuario.username}]]</th>
                                             <th>[[#{usuario.nombre}]]</th>
-                                            <th>[[#{apellido.apellido}]]</th>
+                                            <th>[[#{usuario.apellidos}]]</th>
+                                            <th>[[#{usuario.estado}]]</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -97,6 +98,7 @@
                                             <td style="color: white;">[[${usuario.username}]]</td>
                                             <td style="color: white;">[[${usuario.nombre}]]</td>
                                             <td style="color: white;"   > [[${usuario.apellidos}]]</td>
+                                            <td style="color: white;"   > [[${usuario.estado}]]</td>
                                             <td sec:authorize="hasRole('ROLE_ADMIN')">
                                                 <a th:href="@{/usuario/eliminar/}+${usuario.idUsuario}"
                                                    style="background-color: rgba(255, 0, 0, 0.5); color: white; "class="btn btn-trasparent">
@@ -122,7 +124,7 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <form method="POST"
-                          th:action="@{/usuario/guardar}" th:object="${usuario}"
+                          th:action="@{/usuario/modificar2}" th:object="${usuario}"
                           class="was-validated"
                           enctype="multipart/form-data">
                         <input type="hidden" name="idUsuario" th:field="*{idUsuario}"/>
@@ -155,7 +157,7 @@
                                                            required="true">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="telefono">[[#{telefono.telefono}]]</label>
+                                                    <label for="telefono">[[#{usuario.telefono}]]</label>
                                                     <input type="tel" class="form-control" 
                                                            name="telefono" th:field="*{telefono}">
                                                 </div>
@@ -165,9 +167,17 @@
                                                            name="usuario" th:field="*{username}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="password">[[#{contrasena.contrasena}]]</label>
+                                                    <label for="password">[[#{usuario.password}]]</label>
                                                     <input type="password" class="form-control" 
                                                            name="password" th:field="*{password}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="estado">[[#{usuario.estado}]]</label>
+                                                    <input class="form-check-input" 
+                                                           type="checkbox" 
+                                                           name="estado" 
+                                                           id="estado"
+                                                           th:field="*{estado}">
                                                 </div>
                                             </div>
                                         </div>

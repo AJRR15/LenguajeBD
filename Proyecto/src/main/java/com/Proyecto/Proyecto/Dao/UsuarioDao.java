@@ -213,8 +213,7 @@ public class UsuarioDao {
         return result != null && result == 1;
     }
     
-    
-    public List<String> GET_ROLES(Long id) {
+    public List<Rol> getroles(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_ROLES")
@@ -230,8 +229,35 @@ public class UsuarioDao {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("UID", id);
         Map<String, Object> results = simpleJdbcCall.execute(mapSqlParameterSource);
-        List<String> rolList = (List<String>) results.get("DATOS");
+        List<Rol> rolList = (List<Rol>) results.get("DATOS");
         return rolList;
     }
+    
+    public void updateusuario(Long USERID,String USNAM,String CONTRAS,String NOMBR,String APELLI,String MAIL,String PHONE,boolean ACTV) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("UPDATE_USUARIO")
+                .declareParameters(
+                        new SqlParameter("USERID", Types.BIGINT),
+                        new SqlParameter("USNAM", Types.VARCHAR),
+                        new SqlParameter("CONTRAS", Types.VARCHAR),
+                        new SqlParameter("NOMBR", Types.VARCHAR),
+                        new SqlParameter("APELLI", Types.VARCHAR),
+                        new SqlParameter("MAIL", Types.VARCHAR),
+                        new SqlParameter("PHONE", Types.VARCHAR),
+                        new SqlParameter("ACTV", Types.BOOLEAN)
+                );
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("USERID", USERID);
+        mapSqlParameterSource.addValue("USNAM", USNAM);
+        mapSqlParameterSource.addValue("CONTRAS", CONTRAS);
+        mapSqlParameterSource.addValue("NOMBR", NOMBR);
+        mapSqlParameterSource.addValue("APELLI", APELLI);
+        mapSqlParameterSource.addValue("MAIL", MAIL);
+        mapSqlParameterSource.addValue("PHONE", PHONE);
+        mapSqlParameterSource.addValue("ACTV", ACTV);
+        simpleJdbcCall.execute(mapSqlParameterSource);
+    }
+    
 
 }

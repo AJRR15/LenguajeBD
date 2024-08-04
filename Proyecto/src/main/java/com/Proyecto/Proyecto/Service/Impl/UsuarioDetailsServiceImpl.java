@@ -35,17 +35,14 @@ public class UsuarioDetailsServiceImpl implements UsuarioDetailsService, UserDet
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioDao.getUsername(username);
-        System.out.println("holaaaaa" + usuario);
         if (usuario == null) {
             throw new UsernameNotFoundException(username);
         }
-        List<String> rolesString = usuarioDao.GET_ROLES(usuario.getIdUsuario());
+        List<Rol> oroles = usuarioDao.getroles(usuario.getIdUsuario());
         List<GrantedAuthority> roles = new ArrayList<>();
-
-        for (String role : rolesString) {
-            roles.add(new SimpleGrantedAuthority(role));
+        for (Rol role : oroles) {
+            roles.add(new SimpleGrantedAuthority(role.getNombre()));
         }
-        System.out.println("ayudaaaa" + roles);
         return new User(usuario.getUsername(), usuario.getPassword(), roles);
     }
 

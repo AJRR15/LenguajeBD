@@ -63,7 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     @Transactional
-    public void save(Usuario usuario, int i) {
+    public void save(Usuario usuario) {
         usuario.setEstado(true);
         usuarioDao.saveUsuario(usuario);
         
@@ -76,16 +76,21 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     @Override
-    public void save2(Usuario usuario, int i) {
+    public void save2(Usuario usuario) {
         usuario.setEstado(true);
         usuarioDao.saveUsuario(usuario);
         Long idUsuario = usuario.getIdUsuario(); 
-        if (i == 1 && idUsuario != null) { 
+        if (usuario.isEstado() && idUsuario != null) { 
         Rol rol = new Rol();
         rol.setNombre("ROLE_USER");
         rol.setIdUsuario(idUsuario);
         rolDao.save(rol); 
         }
+    }
+
+    @Override
+    public void updateuser(Long USERID, String USNAM, String CONTRAS, String NOMBR, String APELLI, String MAIL, String PHONE, boolean ACTV) {
+        usuarioDao.updateusuario(USERID, USNAM, CONTRAS, NOMBR, APELLI, MAIL, PHONE, ACTV);
     }
   
 }

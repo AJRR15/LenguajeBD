@@ -36,7 +36,7 @@ public class UsuarioController {
     public String usuarioGuardar(Usuario usuario) {
         var codigo = new BCryptPasswordEncoder();
         usuario.setPassword(codigo.encode(usuario.getPassword()));
-        usuarioService.save2(usuario,1);
+        usuarioService.save2(usuario);
         return "redirect:/usuario/listado";
     }
 
@@ -51,5 +51,13 @@ public class UsuarioController {
         usuario = usuarioService.getUsuario(usuario);
         model.addAttribute("usuario", usuario);
         return "/usuario/modifica";
+    }
+    
+    @PostMapping("/modificar2")
+    public String usuarioModificar2(@RequestParam("idUsuario")Long idUsuario, @RequestParam("username") String username,@RequestParam("password") String password, @RequestParam("nombre") String nombre,
+            @RequestParam("apellidos")String apellidos, @RequestParam("correo") String correo,@RequestParam("telefono") String telefono, @RequestParam("estado") boolean estado) {
+        var codigo = new BCryptPasswordEncoder();
+        usuarioService.updateuser(idUsuario,username,codigo.encode(password),nombre,apellidos,correo,telefono,estado);
+        return "redirect:/usuario/listado";
     }
 }

@@ -54,6 +54,7 @@ public class CategoriaController {
 
     @PostMapping("/modificar2")
     public String categoriaModificar2(@RequestParam("idCategoria")Long idCategoria, @RequestParam("descripcion") String descripcion,@RequestParam("rutaImagen") String rutaImagen, @RequestParam("estado") boolean estado) {
+        //int estadoValor = estado ? 1 : 0;
         categoriaService.update(idCategoria,descripcion,rutaImagen,estado);
         return "redirect:/categoria/categorias";
     }

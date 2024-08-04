@@ -33,11 +33,11 @@ public interface UsuarioService {
     
     // Se inserta un nuevo usuario si el id del usuario esta vacío
     // Se actualiza un usuario si el id del usuario NO esta vacío
-    public void save(Usuario usuario,int i);
+    public void save(Usuario usuario);
    
-    public void save2(Usuario usuario,int i);
+    public void save2(Usuario usuario);
     // Se elimina el usuario que tiene el id pasado por parámetro
     public void delete(Usuario usuario);
     
- 
+    public void updateuser(Long USERID,String USNAM,String CONTRAS,String NOMBR,String APELLI,String MAIL,String PHONE,boolean ACTV);
 }

@@ -57,7 +57,7 @@ public class RegistroServiceImpl implements RegistroService {
     public void activar(Usuario usuario) {
         var codigo = new BCryptPasswordEncoder();
         usuario.setPassword(codigo.encode(usuario.getPassword()));
-        usuarioService.save2(usuario, 1);
+        usuarioService.save2(usuario);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class RegistroServiceImpl implements RegistroService {
             String clave = demeClave();
             usuario.setPassword(clave);
             usuario.setEstado(true);
-            usuarioService.save(usuario, 1);
+            usuarioService.save(usuario);
             enviaCorreoActivar(usuario, clave);
             mensaje = String.format(
                     messageSource.getMessage(
@@ -110,7 +110,7 @@ public class RegistroServiceImpl implements RegistroService {
             String clave = demeClave();
             usuario2.setPassword(clave);
             usuario2.setEstado(true);
-            usuarioService.save(usuario2, 1);
+            usuarioService.save(usuario2);
             enviaCorreoRecordar(usuario2, clave);
             mensaje = String.format(
                     messageSource.getMessage(
