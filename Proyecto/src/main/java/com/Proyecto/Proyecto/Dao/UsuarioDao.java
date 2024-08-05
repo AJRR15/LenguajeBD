@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import java.sql.SQLException;
 import java.util.Map;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
@@ -207,12 +208,12 @@ public class UsuarioDao {
     public boolean USUARIO_EXISTE(String username, String correo) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
-                .withFunctionName("USUARIO_EXISTE")
                 .withCatalogName("PACKAGE_USUARIO")
+                .withFunctionName("USUARIO_EXISTE")
                 .declareParameters(
                         new SqlParameter("UNAME", Types.VARCHAR),
-                        new SqlParameter("CORRE", Types.VARCHAR)
-                );
+                        new SqlParameter("CORRE", Types.VARCHAR))
+                .declareParameters(new SqlOutParameter("RETURN_VALUE", Types.INTEGER));
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("UNAME", username);
         mapSqlParameterSource.addValue("CORRE", correo);
@@ -220,7 +221,7 @@ public class UsuarioDao {
         Integer result = (Integer) results.get("RETURN_VALUE");
         return result != null && result == 1;
     }
-    
+
     public List<Rol> getroles(Long id) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
@@ -241,8 +242,8 @@ public class UsuarioDao {
         List<Rol> rolList = (List<Rol>) results.get("DATOS");
         return rolList;
     }
-    
-    public void updateusuario(Long USERID,String USNAM,String CONTRAS,String NOMBR,String APELLI,String MAIL,String PHONE,boolean ACTV) {
+
+    public void updateusuario(Long USERID, String USNAM, String CONTRAS, String NOMBR, String APELLI, String MAIL, String PHONE, boolean ACTV) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("UPDATE_USUARIO")
@@ -268,6 +269,5 @@ public class UsuarioDao {
         mapSqlParameterSource.addValue("ACTV", ACTV);
         simpleJdbcCall.execute(mapSqlParameterSource);
     }
-    
 
 }
