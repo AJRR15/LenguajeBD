@@ -25,6 +25,7 @@ public class CategoriaDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_CATEGORIA")
+                .withCatalogName("PACKAGE_CATEGORIA")
                 .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Categorias>() {
                     @Override
@@ -47,6 +48,7 @@ public class CategoriaDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_ONE_CATEGORIA")
+                .withCatalogName("PACKAGE_CATEGORIA")
                 .declareParameters(new SqlParameter("CID", Types.BIGINT),new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Categorias>() {
                     @Override
@@ -70,6 +72,7 @@ public class CategoriaDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("ADD_CATEGORIA")
+                .withCatalogName("PACKAGE_CATEGORIA")
                 .declareParameters(
                         new SqlParameter("DESCRIP", Types.VARCHAR),
                         new SqlParameter("IMG", Types.VARCHAR),
@@ -86,6 +89,7 @@ public class CategoriaDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("DELETE_CATEGORIA")
+                .withCatalogName("PACKAGE_CATEGORIA")
                 .declareParameters(new SqlParameter("CID", Types.BIGINT));
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("CID", id);
@@ -96,6 +100,7 @@ public class CategoriaDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("UPDATE_CATEGORIA")
+                .withCatalogName("PACKAGE_CATEGORIA")
                 .declareParameters(
                         new SqlParameter("CID", Types.BIGINT),
                         new SqlParameter("DESCRIP", Types.VARCHAR),

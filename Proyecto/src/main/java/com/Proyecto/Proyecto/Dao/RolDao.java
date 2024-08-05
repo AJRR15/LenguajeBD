@@ -24,6 +24,7 @@ public class RolDao  {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("ADD_ROL")
+                .withCatalogName("PACKAGE_ROL")
                 .declareParameters(
                         new SqlParameter("RNAME", Types.VARCHAR),
                         new SqlParameter("IDUSER", Types.BIGINT)

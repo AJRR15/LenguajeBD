@@ -31,6 +31,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_USUARIOS")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
                     @Override
@@ -57,6 +58,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_USUARIOBYID")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(new SqlParameter("UID", Types.BIGINT), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
                     @Override
@@ -84,6 +86,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_USUARIOBYUSERNAME")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(new SqlParameter("UNAME", Types.VARCHAR), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
                     @Override
@@ -111,6 +114,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_USERNAMEANDPASSWORD")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(new SqlParameter("UNAME", Types.VARCHAR), new SqlParameter("PASS", Types.VARCHAR), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
                     @Override
@@ -139,6 +143,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_USERNAMEORCORREO")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(new SqlParameter("UNAME", Types.VARCHAR), new SqlParameter("CORR", Types.VARCHAR), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Usuario>() {
                     @Override
@@ -167,6 +172,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("ADD_USUARIO")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(
                         new SqlParameter("UNAME", Types.VARCHAR),
                         new SqlParameter("PASS", Types.VARCHAR),
@@ -191,6 +197,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("DELETE_USUARIO")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(new SqlParameter("USEID", Types.BIGINT));
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("USEID", id);
@@ -201,6 +208,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withFunctionName("USUARIO_EXISTE")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(
                         new SqlParameter("UNAME", Types.VARCHAR),
                         new SqlParameter("CORRE", Types.VARCHAR)
@@ -217,6 +225,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("GET_ROLES")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(new SqlParameter("UID", Types.BIGINT), new SqlParameter("DATOS", Types.REF_CURSOR))
                 .returningResultSet("DATOS", new RowMapper<Rol>() {
                     @Override
@@ -237,6 +246,7 @@ public class UsuarioDao {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withSchemaName("admin_lenguajes")
                 .withProcedureName("UPDATE_USUARIO")
+                .withCatalogName("PACKAGE_USUARIO")
                 .declareParameters(
                         new SqlParameter("USERID", Types.BIGINT),
                         new SqlParameter("USNAM", Types.VARCHAR),
