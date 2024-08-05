@@ -55,7 +55,7 @@ public class UsuarioController {
     
     @PostMapping("/modificar2")
     public String usuarioModificar2(@RequestParam("idUsuario")Long idUsuario, @RequestParam("username") String username,@RequestParam("password") String password, @RequestParam("nombre") String nombre,
-            @RequestParam("apellidos")String apellidos, @RequestParam("correo") String correo,@RequestParam("telefono") String telefono, @RequestParam("estado") boolean estado) {
+            @RequestParam("apellidos")String apellidos, @RequestParam("correo") String correo,@RequestParam("telefono") String telefono, @RequestParam(value = "estado", defaultValue = "false") boolean estado) {
         var codigo = new BCryptPasswordEncoder();
         usuarioService.updateuser(idUsuario,username,codigo.encode(password),nombre,apellidos,correo,telefono,estado);
         return "redirect:/usuario/listado";

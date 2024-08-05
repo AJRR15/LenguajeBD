@@ -35,7 +35,7 @@ public class UsuarioDetailsServiceImpl implements UsuarioDetailsService, UserDet
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioDao.getUsername(username);
-        if (usuario == null) {
+        if (usuario == null || !usuario.isEstado()) {
             throw new UsernameNotFoundException(username);
         }
         List<Rol> oroles = usuarioDao.getroles(usuario.getIdUsuario());
