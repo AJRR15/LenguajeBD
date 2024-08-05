@@ -51,6 +51,9 @@
                                         <i class="fas fa-check"></i>[[#{enviar.enviar}]]
                                     </button>
                                 </div>
+                                <div th:if="${error != null}" class="error-message" style="text-align: center; color: black;">
+                                    <p th:text="${error}"></p>
+                                </div>
                             </div>
                         </form>
                     </div>

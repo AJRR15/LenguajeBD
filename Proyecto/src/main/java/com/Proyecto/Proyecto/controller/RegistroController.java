@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.Proyecto.Proyecto.Domain.Usuario;
 import com.Proyecto.Proyecto.Service.RegistroService;
+import com.Proyecto.Proyecto.Service.UsuarioService;
+import org.springframework.ui.Model;
 @Controller
 @Slf4j
 @RequestMapping("/registro")
 public class RegistroController {
     @Autowired
     private RegistroService registroService;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping("/nuevo")
     public String nuevo(Usuario usuario) {
@@ -24,9 +28,14 @@ public class RegistroController {
     }
 
     @PostMapping("/crearUsuario")
-    public String crearUsuario(Usuario usuario){
-        registroService.save(usuario);
-        return "/login";
+    public String crearUsuario(Usuario usuario,Model model){
+        if (!usuarioService.existeUsuarioPorUsernameOCorreo(usuario.getUsername(), usuario.getCorreo())) {
+            registroService.save(usuario);
+            return "/login";
+        } else {
+            model.addAttribute("error", "El usuario ya existe.");
+            return "/registro/new"; 
+        }
     }
 
 }

@@ -19,11 +19,9 @@ public class RegistroServiceImpl implements RegistroService {
 
     @Override
     public void save(Usuario usuario) {
-        if (!usuarioService.existeUsuarioPorUsernameOCorreo(usuario.getUsername(), usuario.getCorreo())) {
-            var codigo = new BCryptPasswordEncoder();
-            usuario.setPassword(codigo.encode(usuario.getPassword()));
-            usuarioService.save2(usuario);
-        } 
+        var codigo = new BCryptPasswordEncoder();
+        usuario.setPassword(codigo.encode(usuario.getPassword()));
+        usuarioService.save2(usuario);
     }
 
 }
