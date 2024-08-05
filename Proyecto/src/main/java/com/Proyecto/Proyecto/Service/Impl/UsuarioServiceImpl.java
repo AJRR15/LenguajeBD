@@ -79,11 +79,10 @@ public class UsuarioServiceImpl implements UsuarioService{
     public void save2(Usuario usuario) {
         usuario.setEstado(true);
         usuarioDao.saveUsuario(usuario);
-        Long idUsuario = usuario.getIdUsuario(); 
-        if (usuario.isEstado() && idUsuario != null) { 
+        if (usuario.isEstado()) { 
         Rol rol = new Rol();
         rol.setNombre("ROLE_USER");
-        rol.setIdUsuario(idUsuario);
+        rol.setIdUsuario(usuarioDao.getUsernameandPassword(usuario.getUsername(), usuario.getPassword()).getIdUsuario());
         rolDao.save(rol); 
         }
     }
