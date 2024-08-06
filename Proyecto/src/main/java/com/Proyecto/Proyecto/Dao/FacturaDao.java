@@ -31,7 +31,7 @@ public class FacturaDao {
                 .declareParameters(
                         new SqlParameter("USID", Types.BIGINT),
                         new SqlParameter("FECHA", Types.DATE),
-                        new SqlParameter("TOTAL", Types.BIGINT)
+                        new SqlParameter("TOTAL", Types.DOUBLE)
                 );
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("USID", factura.getIdUsuario());
