@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @RequestMapping("/usuario")
 public class UsuarioController {
     
-     @Autowired
+    @Autowired
     private UsuarioService usuarioService;
 
     @GetMapping("/listado")

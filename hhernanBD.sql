@@ -704,6 +704,38 @@ EXCEPTION
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Error inesperado al abrir el cursor: ' || SQLERRM);
  END;*/
+  --------------------------------------------------------
+--GET_FACTURAS
+--------------------------------------------------------
+/*CREATE OR REPLACE PROCEDURE GET_FACTURAS (DATOS OUT SYS_REFCURSOR)
+AS  
+    VSQL VARCHAR2(1024);
+BEGIN
+    VSQL := 'SELECT ID_FACTURA, ID_USUARIO,FECHA,TOTAL
+             FROM FACTURA';
+    OPEN DATOS FOR VSQL;
+EXCEPTION    
+   WHEN TOO_MANY_ROWS THEN
+     DBMS_OUTPUT.PUT_LINE('***   ERROR DE FILAS MULTIPLES  ****');       
+ WHEN NO_DATA_FOUND THEN
+     DBMS_OUTPUT.PUT_LINE('***   NO HAY DATOS  ****');      
+END;*/
+  --------------------------------------------------------
+--GET_DETALLES
+--------------------------------------------------------
+/*CREATE OR REPLACE PROCEDURE GET_DETALLES (DATOS OUT SYS_REFCURSOR)
+AS  
+    VSQL VARCHAR2(1024);
+BEGIN
+    VSQL := 'SELECT ID_DETALLE_FACTURA,ID_FACTURA,ID_JUEGO,PRECIO,CANTIDAD
+             FROM DETALLE_FACTURA';
+    OPEN DATOS FOR VSQL;
+EXCEPTION    
+   WHEN TOO_MANY_ROWS THEN
+     DBMS_OUTPUT.PUT_LINE('***   ERROR DE FILAS MULTIPLES  ****');       
+ WHEN NO_DATA_FOUND THEN
+     DBMS_OUTPUT.PUT_LINE('***   NO HAY DATOS  ****');      
+END;*/
 --------------------------------------------------------------------------------------------------------------------------------------
 /*CREATE OR REPLACE PACKAGE PACKAGE_CATEGORIA AS
     PROCEDURE ADD_CATEGORIA (DESCRIP IN VARCHAR2,IMG IN VARCHAR2,ACT IN NUMBER );
@@ -800,6 +832,7 @@ END;*/
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 /*CREATE OR REPLACE PACKAGE PACKAGE_DETALLE_FACTURA AS
     PROCEDURE ADD_DETALLE_FACTURA (IDFACT IN NUMBER,IDJUEGO IN NUMBER,PRECIO IN NUMBER,CANTIDAD IN NUMBER);
+    PROCEDURE GET_DETALLES (DATOS OUT SYS_REFCURSOR);
 END;
 
 CREATE OR REPLACE PACKAGE BODY PACKAGE_DETALLE_FACTURA AS
@@ -810,12 +843,27 @@ CREATE OR REPLACE PACKAGE BODY PACKAGE_DETALLE_FACTURA AS
     WHEN VALUE_ERROR THEN
         DBMS_OUTPUT.PUT_LINE('Error: Se espera otro tipo de dato de entrada.');
     END;
+    
+    PROCEDURE GET_DETALLES (DATOS OUT SYS_REFCURSOR)
+    AS  
+    VSQL VARCHAR2(1024);
+    BEGIN
+    VSQL := 'SELECT ID_DETALLE_FACTURA,ID_FACTURA,ID_JUEGO,PRECIO,CANTIDAD
+             FROM DETALLE_FACTURA';
+    OPEN DATOS FOR VSQL;
+    EXCEPTION    
+    WHEN TOO_MANY_ROWS THEN
+     DBMS_OUTPUT.PUT_LINE('***   ERROR DE FILAS MULTIPLES  ****');       
+    WHEN NO_DATA_FOUND THEN
+     DBMS_OUTPUT.PUT_LINE('***   NO HAY DATOS  ****');      
+    END;
 END;*/
 -------------------------------------------------------------------------------------------------------------------------------------
 /*CREATE OR REPLACE PACKAGE PACKAGE_FACTURA AS
     PROCEDURE ADD_FACTURA (USID IN NUMBER,FECHA IN DATE,TOTAL IN NUMBER);
     PROCEDURE UPDATE_FACTURA (FID IN NUMBER,TOTL IN NUMBER);
     PROCEDURE GET_FACTURA_ID (FECH IN DATE,DATOS OUT SYS_REFCURSOR);
+    PROCEDURE GET_FACTURAS (DATOS OUT SYS_REFCURSOR);
 END;
 
 CREATE OR REPLACE PACKAGE BODY PACKAGE_FACTURA AS
@@ -846,6 +894,20 @@ CREATE OR REPLACE PACKAGE BODY PACKAGE_FACTURA AS
         DBMS_OUTPUT.PUT_LINE('Error: Se espera un tipo de dato diferente en los parámetros de entrada.');
     WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('Error inesperado al abrir el cursor: ' || SQLERRM);
+    END;
+    
+    PROCEDURE GET_FACTURAS (DATOS OUT SYS_REFCURSOR)
+    AS  
+    VSQL VARCHAR2(1024);
+    BEGIN
+    VSQL := 'SELECT ID_FACTURA, ID_USUARIO,FECHA,TOTAL
+             FROM FACTURA';
+    OPEN DATOS FOR VSQL;
+    EXCEPTION    
+    WHEN TOO_MANY_ROWS THEN
+     DBMS_OUTPUT.PUT_LINE('***   ERROR DE FILAS MULTIPLES  ****');       
+    WHEN NO_DATA_FOUND THEN
+     DBMS_OUTPUT.PUT_LINE('***   NO HAY DATOS  ****');      
     END;
 END;*/
 ----------------------------------------------------------------------------------------------------------------------------------------

@@ -22,6 +22,29 @@ public class FacturaDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    
+    public List<Factura> getListfacturas() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName("admin_lenguajes")
+                .withProcedureName("GET_FACTURAS")
+                .withCatalogName("PACKAGE_FACTURA")
+                .declareParameters(new SqlParameter("DATOS", Types.REF_CURSOR))
+                .returningResultSet("DATOS", new RowMapper<Factura>() {
+                    @Override
+                    public Factura mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Factura factura = new Factura();
+                        factura.setIdFactura(rs.getLong("ID_FACTURA"));
+                        factura.setIdUsuario(rs.getLong("ID_USUARIO"));
+                        factura.setFecha(rs.getDate("FECHA"));
+                        factura.setTotal(rs.getDouble("TOTAL"));
+                        return factura;
+                    }
+                });
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        Map<String, Object> results = simpleJdbcCall.execute(mapSqlParameterSource);
+        List<Factura> facturaList = (List<Factura>) results.get("DATOS");
+        return facturaList;
+    }
 
     public void savefactura(Factura factura) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
