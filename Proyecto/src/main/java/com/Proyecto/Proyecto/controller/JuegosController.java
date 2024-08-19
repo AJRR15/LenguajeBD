@@ -9,13 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import oracle.jdbc.OracleDatabaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/juego")
@@ -65,7 +68,6 @@ public class JuegosController {
         // Obtener todas las categorías y agregarlas al modelo
         List<Categorias> categorias = juegosService.getCates();
         model.addAttribute("categorias", categorias);
-
         return "/juego/modifica";
     }
 
@@ -81,4 +83,6 @@ public class JuegosController {
         juegosService.update(idJuego, imagen, nombre, empresa, precio, existencias, estado, idcategoria);
         return "redirect:/juego/juegos";
     }
+
+
 }

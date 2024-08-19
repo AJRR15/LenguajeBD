@@ -1159,6 +1159,95 @@ CREATE OR REPLACE PACKAGE BODY PACKAGE_USUARIO AS
             RETURN -1;
     END;
 END;*/
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+/*ALTER TABLE CATEGORIA
+ADD (FECHA_CREACION TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     FECHA_MODIFICACION TIMESTAMP,
+     CREADO_POR VARCHAR2(30),
+     MODIFICADO_POR VARCHAR2(30),
+     ACCION varchar2(30));
+
+
+CREATE OR REPLACE TRIGGER CATEGORIA_TRG
+BEFORE INSERT OR UPDATE ON CATEGORIA
+FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        :NEW.FECHA_CREACION := CURRENT_TIMESTAMP;
+        :NEW.CREADO_POR := USER;
+        :NEW.ACCION:='INSERTAR';
+    ELSIF UPDATING THEN
+
+        :NEW.FECHA_MODIFICACION := CURRENT_TIMESTAMP;
+        :NEW.MODIFICADO_POR := USER;
+        :NEW.ACCION:='ACTUALIZAR';
+    END IF;
+END;
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE JUEGO
+ADD (FECHA_CREACION TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     FECHA_MODIFICACION TIMESTAMP,
+     CREADO_POR VARCHAR2(30),
+     MODIFICADO_POR VARCHAR2(30),
+     ACCION varchar2(30));
+
+
+CREATE OR REPLACE TRIGGER JUEGO_TRG
+BEFORE INSERT OR UPDATE ON JUEGO
+FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        :NEW.FECHA_CREACION := CURRENT_TIMESTAMP;
+        :NEW.CREADO_POR := USER;
+        :NEW.ACCION:='INSERTAR';
+    ELSIF UPDATING THEN
+
+        :NEW.FECHA_MODIFICACION := CURRENT_TIMESTAMP;
+        :NEW.MODIFICADO_POR := USER;
+        :NEW.ACCION:='ACTUALIZAR';
+    END IF;
+END;
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+ALTER TABLE USUARIO
+ADD (FECHA_CREACION TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     FECHA_MODIFICACION TIMESTAMP,
+     CREADO_POR VARCHAR2(30),
+     MODIFICADO_POR VARCHAR2(30),
+     ACCION varchar2(30));
+
+
+CREATE OR REPLACE TRIGGER USUARIO_TRG
+BEFORE INSERT OR UPDATE ON USUARIO
+FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        :NEW.FECHA_CREACION := CURRENT_TIMESTAMP;
+        :NEW.CREADO_POR := USER;
+        :NEW.ACCION:='INSERTAR';
+    ELSIF UPDATING THEN
+
+        :NEW.FECHA_MODIFICACION := CURRENT_TIMESTAMP;
+        :NEW.MODIFICADO_POR := USER;
+        :NEW.ACCION:='ACTUALIZAR';
+    END IF;
+END;*/
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
