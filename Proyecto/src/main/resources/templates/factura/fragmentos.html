@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{layout/plantilla :: head}">
+        <title></title>
+    </head>
+    <body>
+        <section th:fragment="listadoFactura" id="factura">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-9">
+                        <div class="card" style="background-color: rgba(0, 0, 0, 0.5); color: white; ">
+                            <div class="card-header">
+                                <h4>Facturas</h4></div>
+                            <div th:if="${facturas != null and !facturas.empty}">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr><th>#</th>
+                                            <th>Identificador de Usuario</th>
+                                            <th>Fecha</th>
+                                            <th>Total de Factura</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="factura, contador : ${facturas}">
+                                            <td style="color: white;">[[${contador.count}]]</td>
+                                            <td style="color: white;">[[${factura.idUsuario}]]</td>
+                                            <td style="color: white;">[[${factura.fecha}]]</td>
+                                            <td style="color: white;"> [[${factura.total}]]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${facturas == null or facturas.empty}">
+                                <span>Lista vacia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section th:fragment="listadoDetalle" id="detalle">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-9">
+                        <div class="card" style="background-color: rgba(0, 0, 0, 0.5); color: white; ">
+                            <div class="card-header">
+                                <h4>Detalles de Factura</h4></div>
+                            <div th:if="${detalles != null and !detalles.empty}">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr><th>#</th>
+                                            <th>Identificador de Factura</th>
+                                            <th>Identificador de Juego</th>
+                                            <th>Precio Unitario</th>
+                                            <th>Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="detalle, contador : ${detalles}">
+                                            <td style="color: white;">[[${contador.count}]]</td>
+                                            <td style="color: white;">[[${detalle.idFactura}]]</td>
+                                            <td style="color: white;">[[${detalle.id_juego}]]</td>
+                                            <td style="color: white;">[[${detalle.precio}]]</td>
+                                            <td style="color: white;">[[${detalle.cantidad}]]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${detalles == null or detalles.empty}">
+                                <span>Lista vacia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
